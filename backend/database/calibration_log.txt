@@ -1,0 +1,117 @@
+Fetching weekly historical data...
+  Successfully fetched data for BTC-USD
+  Successfully fetched data for SOL-USD
+  Successfully fetched data for ETH-USD
+
+Starting TRIPLE calibration for BTC, SOL, & ETH Flip Levels...
+*** New best parameters found! Error: 2997.0000, Params: {'period': 5, 'multiplier': 1.0} ***
+[10/1020] P=5, M=1.9 -> Combined Error: 2997.0000
+[20/1020] P=5, M=2.9 -> Combined Error: 2997.0000
+[30/1020] P=5, M=3.9 -> Combined Error: 2997.0000
+[40/1020] P=5, M=4.9 -> Combined Error: 2997.0000
+[50/1020] P=5, M=5.9 -> Combined Error: 2997.0000
+[60/1020] P=6, M=1.8 -> Combined Error: 2997.0000
+[70/1020] P=6, M=2.8 -> Combined Error: 2997.0000
+[80/1020] P=6, M=3.8 -> Combined Error: 2997.0000
+[90/1020] P=6, M=4.8 -> Combined Error: 2997.0000
+[100/1020] P=6, M=5.8 -> Combined Error: 2997.0000
+[110/1020] P=7, M=1.7 -> Combined Error: 2997.0000
+[120/1020] P=7, M=2.7 -> Combined Error: 2997.0000
+[130/1020] P=7, M=3.7 -> Combined Error: 2997.0000
+[140/1020] P=7, M=4.7 -> Combined Error: 2997.0000
+[150/1020] P=7, M=5.7 -> Combined Error: 2997.0000
+[160/1020] P=8, M=1.6 -> Combined Error: 2997.0000
+[170/1020] P=8, M=2.6 -> Combined Error: 2997.0000
+[180/1020] P=8, M=3.6 -> Combined Error: 2997.0000
+[190/1020] P=8, M=4.6 -> Combined Error: 2997.0000
+[200/1020] P=8, M=5.6 -> Combined Error: 2997.0000
+[210/1020] P=9, M=1.5 -> Combined Error: 2997.0000
+[220/1020] P=9, M=2.5 -> Combined Error: 2997.0000
+[230/1020] P=9, M=3.5 -> Combined Error: 2997.0000
+[240/1020] P=9, M=4.5 -> Combined Error: 2997.0000
+[250/1020] P=9, M=5.5 -> Combined Error: 2997.0000
+[260/1020] P=10, M=1.4 -> Combined Error: 2997.0000
+[270/1020] P=10, M=2.4 -> Combined Error: 2997.0000
+[280/1020] P=10, M=3.4 -> Combined Error: 2997.0000
+[290/1020] P=10, M=4.4 -> Combined Error: 2997.0000
+[300/1020] P=10, M=5.4 -> Combined Error: 2997.0000
+[310/1020] P=11, M=1.3 -> Combined Error: 2997.0000
+[320/1020] P=11, M=2.3 -> Combined Error: 2997.0000
+[330/1020] P=11, M=3.3 -> Combined Error: 2997.0000
+[340/1020] P=11, M=4.3 -> Combined Error: 2997.0000
+[350/1020] P=11, M=5.3 -> Combined Error: 2997.0000
+[360/1020] P=12, M=1.2 -> Combined Error: 2997.0000
+[370/1020] P=12, M=2.2 -> Combined Error: 2997.0000
+[380/1020] P=12, M=3.2 -> Combined Error: 2997.0000
+[390/1020] P=12, M=4.2 -> Combined Error: 2997.0000
+[400/1020] P=12, M=5.2 -> Combined Error: 2997.0000
+[410/1020] P=13, M=1.1 -> Combined Error: 2997.0000
+[420/1020] P=13, M=2.1 -> Combined Error: 2997.0000
+[430/1020] P=13, M=3.1 -> Combined Error: 2997.0000
+[440/1020] P=13, M=4.1 -> Combined Error: 2997.0000
+[450/1020] P=13, M=5.1 -> Combined Error: 2997.0000
+[460/1020] P=14, M=1.0 -> Combined Error: 2997.0000
+[470/1020] P=14, M=2.0 -> Combined Error: 2997.0000
+[480/1020] P=14, M=3.0 -> Combined Error: 2997.0000
+[490/1020] P=14, M=4.0 -> Combined Error: 2997.0000
+[500/1020] P=14, M=5.0 -> Combined Error: 2997.0000
+[510/1020] P=14, M=6.0 -> Combined Error: 2997.0000
+[520/1020] P=15, M=1.9 -> Combined Error: 2997.0000
+[530/1020] P=15, M=2.9 -> Combined Error: 2997.0000
+[540/1020] P=15, M=3.9 -> Combined Error: 2997.0000
+[550/1020] P=15, M=4.9 -> Combined Error: 2997.0000
+[560/1020] P=15, M=5.9 -> Combined Error: 2997.0000
+[570/1020] P=16, M=1.8 -> Combined Error: 2997.0000
+[580/1020] P=16, M=2.8 -> Combined Error: 2997.0000
+[590/1020] P=16, M=3.8 -> Combined Error: 2997.0000
+[600/1020] P=16, M=4.8 -> Combined Error: 2997.0000
+[610/1020] P=16, M=5.8 -> Combined Error: 2997.0000
+[620/1020] P=17, M=1.7 -> Combined Error: 2997.0000
+[630/1020] P=17, M=2.7 -> Combined Error: 2997.0000
+[640/1020] P=17, M=3.7 -> Combined Error: 2997.0000
+[650/1020] P=17, M=4.7 -> Combined Error: 2997.0000
+[660/1020] P=17, M=5.7 -> Combined Error: 2997.0000
+[670/1020] P=18, M=1.6 -> Combined Error: 2997.0000
+[680/1020] P=18, M=2.6 -> Combined Error: 2997.0000
+[690/1020] P=18, M=3.6 -> Combined Error: 2997.0000
+[700/1020] P=18, M=4.6 -> Combined Error: 2997.0000
+[710/1020] P=18, M=5.6 -> Combined Error: 2997.0000
+[720/1020] P=19, M=1.5 -> Combined Error: 2997.0000
+[730/1020] P=19, M=2.5 -> Combined Error: 2997.0000
+[740/1020] P=19, M=3.5 -> Combined Error: 2997.0000
+[750/1020] P=19, M=4.5 -> Combined Error: 2997.0000
+[760/1020] P=19, M=5.5 -> Combined Error: 2997.0000
+[770/1020] P=20, M=1.4 -> Combined Error: 2997.0000
+[780/1020] P=20, M=2.4 -> Combined Error: 2997.0000
+[790/1020] P=20, M=3.4 -> Combined Error: 2997.0000
+[800/1020] P=20, M=4.4 -> Combined Error: 2997.0000
+[810/1020] P=20, M=5.4 -> Combined Error: 2997.0000
+[820/1020] P=21, M=1.3 -> Combined Error: 2997.0000
+[830/1020] P=21, M=2.3 -> Combined Error: 2997.0000
+[840/1020] P=21, M=3.3 -> Combined Error: 2997.0000
+[850/1020] P=21, M=4.3 -> Combined Error: 2997.0000
+[860/1020] P=21, M=5.3 -> Combined Error: 2997.0000
+[870/1020] P=22, M=1.2 -> Combined Error: 2997.0000
+[880/1020] P=22, M=2.2 -> Combined Error: 2997.0000
+[890/1020] P=22, M=3.2 -> Combined Error: 2997.0000
+[900/1020] P=22, M=4.2 -> Combined Error: 2997.0000
+[910/1020] P=22, M=5.2 -> Combined Error: 2997.0000
+[920/1020] P=23, M=1.1 -> Combined Error: 2997.0000
+[930/1020] P=23, M=2.1 -> Combined Error: 2997.0000
+[940/1020] P=23, M=3.1 -> Combined Error: 2997.0000
+[950/1020] P=23, M=4.1 -> Combined Error: 2997.0000
+[960/1020] P=23, M=5.1 -> Combined Error: 2997.0000
+[970/1020] P=24, M=1.0 -> Combined Error: 2997.0000
+[980/1020] P=24, M=2.0 -> Combined Error: 2997.0000
+[990/1020] P=24, M=3.0 -> Combined Error: 2997.0000
+[1000/1020] P=24, M=4.0 -> Combined Error: 2997.0000
+[1010/1020] P=24, M=5.0 -> Combined Error: 2997.0000
+[1020/1020] P=24, M=6.0 -> Combined Error: 2997.0000
+
+--- Triple Calibration Complete ---
+Best parameters found: {'period': 5, 'multiplier': 1.0} with a combined percentage error of 2997.0000
+
+Final Validation:
+  BTC-USD: Target=$98,467.27 -> Calculated=$nan
+  SOL-USD: Target=$136.50 -> Calculated=$nan
+  ETH-USD: Target=$3,103.00 -> Calculated=$nan
