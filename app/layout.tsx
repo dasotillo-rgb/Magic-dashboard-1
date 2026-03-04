@@ -9,10 +9,10 @@ const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 export const metadata: Metadata = {
   title: "Ape Intelligence OS",
   description: "Blindado y Operativo.",
-  manifest: "/manifest.json",
+  manifest: "/manifest.json?v=4",
   icons: {
-    icon: "/app-logo.png",
-    apple: "/app-logo.png",
+    icon: "/ape-v4.png",
+    apple: "/ape-v4.png",
   },
   appleWebApp: {
     capable: true,
@@ -32,8 +32,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="es">
       <head>
-        <link rel="apple-touch-icon" href="/app-logo.png?v=3" />
-        <link rel="icon" href="/app-logo.png?v=3" />
+        <link rel="apple-touch-icon" href="/ape-v4.png" />
       </head>
       <body className={`${inter.className} bg-[#0A0A0A] text-white`}>
         <div className="flex min-h-screen">
