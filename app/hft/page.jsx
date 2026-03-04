@@ -84,16 +84,20 @@ export default function HFTV2Dashboard() {
     if (busy.current) return;
     busy.current = true;
     try {
-      const targetUrl = `${apiBase}/api/all`;
+      // Use server-side proxy to avoid HTTPS→HTTP mixed content on mobile/Vercel
+      const isHttps = typeof window !== 'undefined' && window.location.protocol === 'https:';
+      const targetUrl = isHttps
+        ? `/api/hft-proxy?path=/api/all`
+        : `${apiBase}/api/all`;
       console.log(`[HFT V2] Realizando fetch a: ${targetUrl}`);
 
       const headers = { "Content-Type": "application/json" };
 
       const response = await fetch(targetUrl, {
         headers,
-        signal: AbortSignal.timeout(4000)
+        signal: AbortSignal.timeout(6000)
       }).catch(err => {
-        console.error(`[HFT V2] Error de red o CORS al contactar ${targetUrl}:`, err);
+        console.error(`[HFT V2] Error de red al contactar ${targetUrl}:`, err);
         throw err;
       });
 
@@ -139,7 +143,10 @@ export default function HFTV2Dashboard() {
 
   const handleSaveSettings = async () => {
     try {
-      const targetUrl = `${apiBase}/api/bot-settings`;
+      const isHttps = typeof window !== 'undefined' && window.location.protocol === 'https:';
+      const targetUrl = isHttps
+        ? `/api/hft-proxy?path=/api/bot-settings`
+        : `${apiBase}/api/bot-settings`;
       console.log(`[HFT V2] Guardando settings en: ${targetUrl}`, settings);
 
       const response = await fetch(targetUrl, {

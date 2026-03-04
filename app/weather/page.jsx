@@ -86,8 +86,11 @@ export default function WeatherDashboard() {
     busy.current = true;
     if (isManual) setIsFetching(true);
     try {
-      // Intenta conectarse al endpoint (El usuario debe programar esto en su python API)
-      const targetUrl = `${apiBase}/api/weather/status`;
+      // Use server-side proxy to avoid HTTPS→HTTP mixed content on mobile/Vercel
+      const isHttps = typeof window !== 'undefined' && window.location.protocol === 'https:';
+      const targetUrl = isHttps
+        ? `/api/weather-proxy?path=/api/weather/status`
+        : `${apiBase}/api/weather/status`;
       console.log(`[Weather] Intentando conectar a: ${targetUrl}`);
       const response = await fetch(targetUrl, { signal: AbortSignal.timeout(8000) });
 
@@ -124,9 +127,13 @@ export default function WeatherDashboard() {
   // Settings Save
   const handleSaveSettings = async () => {
     try {
-      console.log(`[Weather] Guardando settings en: ${apiBase}/api/weather/config`);
+      console.log(`[Weather] Guardando settings`);
+      const isHttps = typeof window !== 'undefined' && window.location.protocol === 'https:';
+      const targetUrl = isHttps
+        ? `/api/weather-proxy?path=/api/weather/config`
+        : `${apiBase}/api/weather/config`;
       // Esto hará POST a la API de python para actualizar config
-      const response = await fetch(`${apiBase}/api/weather/config`, {
+      const response = await fetch(targetUrl, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(botConfig),
