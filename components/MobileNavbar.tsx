@@ -18,7 +18,7 @@ export function MobileNavbar() {
     if (pathname === '/login') return null;
 
     return (
-        <nav className="lg:hidden fixed bottom-0 left-0 right-0 bg-[#0A0A0A]/95 backdrop-blur-lg border-t border-white/10 px-4 py-2 flex justify-around items-center z-50 safe-area-bottom">
+        <nav className="lg:hidden fixed bottom-0 left-0 right-0 bg-[#0A0A0A]/95 backdrop-blur-lg border-t border-white/10 px-4 pt-2 flex justify-around items-center z-50" style={{ paddingBottom: 'max(0.75rem, env(safe-area-inset-bottom, 0.75rem))' }}>
             {navItems.map(item => {
                 const isActive = pathname === item.href;
                 return (

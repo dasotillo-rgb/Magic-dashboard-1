@@ -40,10 +40,10 @@ function Card({ title, icon, children, className = "", headerRight }) {
 
 function BigNum({ label, value, sub, colorClass, small }) {
   return (
-    <div className="text-center flex flex-col items-center justify-center">
-      <div className="text-[10px] font-bold uppercase tracking-widest text-gray-500 mb-1.5">{label}</div>
-      <div className={`${small ? 'text-lg' : 'text-3xl'} font-black ${colorClass || 'text-white'} font-mono leading-none tracking-tight`}>{value}</div>
-      {sub && <div className="text-[10px] text-gray-500 mt-1.5">{sub}</div>}
+    <div className="text-center flex flex-col items-center justify-center overflow-hidden min-w-0">
+      <div className="text-[9px] sm:text-[10px] font-bold uppercase tracking-widest text-gray-500 mb-1">{label}</div>
+      <div className={`${small ? 'text-base sm:text-lg' : 'text-xl sm:text-3xl'} font-black ${colorClass || 'text-white'} font-mono leading-none tracking-tight truncate max-w-full`}>{value}</div>
+      {sub && <div className="text-[10px] text-gray-500 mt-1">{sub}</div>}
     </div>
   );
 }
@@ -287,7 +287,7 @@ export default function HFTV2Dashboard() {
         >
           {market?.status === "LIVE" ? (
             <div className="flex flex-col gap-5">
-              <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+              <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-5 gap-3 lg:gap-4">
                 <BigNum label="BTC Price" value={fmtUsd(market.current_price)} small />
                 <BigNum label="Strike" value={fmtUsd(market.strike_price)} small />
                 <BigNum label="Delta" value={`${market.delta > 0 ? "+" : ""}${fmt(market.delta)}`} colorClass={deltaText} small />
@@ -303,7 +303,7 @@ export default function HFTV2Dashboard() {
                   <div className="text-xs font-bold text-[#00FF41] mb-2 tracking-widest">FAIR VALUE UP</div>
                   <div className="text-3xl font-black text-[#00FF41] font-mono">{pct(market.fair_value_up)}</div>
                   {market.order_book?.up && (
-                    <div className="text-[10px] text-gray-500 mt-2 font-mono">
+                    <div className="text-[9px] text-gray-500 mt-2 font-mono break-all leading-relaxed">
                       Ask: {fmt(market.order_book.up.best_ask, 3)} | Spread: {fmt(market.order_book.up.spread, 4)} | Depth: {fmt(market.order_book.up.ask_depth_5, 0)}
                     </div>
                   )}
@@ -312,7 +312,7 @@ export default function HFTV2Dashboard() {
                   <div className="text-xs font-bold text-red-500 mb-2 tracking-widest">FAIR VALUE DOWN</div>
                   <div className="text-3xl font-black text-red-500 font-mono">{pct(market.fair_value_down)}</div>
                   {market.order_book?.down && (
-                    <div className="text-[10px] text-gray-500 mt-2 font-mono">
+                    <div className="text-[9px] text-gray-500 mt-2 font-mono break-all leading-relaxed">
                       Ask: {fmt(market.order_book.down.best_ask, 3)} | Spread: {fmt(market.order_book.down.spread, 4)} | Depth: {fmt(market.order_book.down.ask_depth_5, 0)}
                     </div>
                   )}
