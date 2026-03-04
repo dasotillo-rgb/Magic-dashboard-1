@@ -10,6 +10,10 @@ export const metadata: Metadata = {
   title: "Ape Intelligence OS",
   description: "Blindado y Operativo.",
   manifest: "/manifest.json",
+  icons: {
+    icon: "/icons/icon-512x512.png",
+    apple: "/icons/icon-512x512.png",
+  },
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
