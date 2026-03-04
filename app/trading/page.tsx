@@ -77,16 +77,16 @@ export default function TradingPage() {
   };
 
   return (
-    <div className="flex flex-col h-[calc(100vh-2rem)] gap-3 bg-[#09090B]">
+    <div className="flex flex-col min-h-screen lg:h-[calc(100vh-2rem)] gap-3 bg-[#09090B]">
       {/* ===== HEADER ===== */}
-      <header className="flex items-center justify-between flex-shrink-0 px-4 py-2 bg-[#18181B] border-b border-[#27272A]">
-        <div className="flex items-center gap-4">
+      <header className="flex flex-wrap items-center justify-between flex-shrink-0 px-4 py-2 bg-[#18181B] border-b border-[#27272A] gap-2">
+        <div className="flex items-center gap-2 flex-wrap">
           <div className="flex items-center gap-2">
             <TrendingUp className="h-6 w-6 text-[#00FF41]" />
             <h1 className="text-xl font-bold text-white tracking-tight">Trading Lab</h1>
           </div>
 
-          <div className="h-6 w-[1px] bg-white/10 mx-2" />
+          <div className="h-6 w-[1px] bg-white/10 mx-1 hidden sm:block" />
 
           {/* Symbol Selector */}
           <div className="relative">
@@ -172,7 +172,7 @@ export default function TradingPage() {
       </header>
 
       {/* ===== MAIN LAYOUT ===== */}
-      <div className="flex-1 grid grid-cols-[1fr_320px] gap-4 min-h-0 px-4 pb-4">
+      <div className="flex-1 flex flex-col lg:grid lg:grid-cols-[1fr_320px] gap-4 min-h-0 px-4 pb-20 lg:pb-4">
         {/* Left Column (Chart + Bots) */}
         <div className="flex flex-col gap-3 min-h-0">
           {/* Chart Area */}
@@ -192,7 +192,7 @@ export default function TradingPage() {
           </div>
 
           {/* Bottom: Polymarket Quant Fund — full width */}
-          <div className="h-[310px]">
+          <div className="min-h-[280px] lg:h-[310px]">
             <PolymarketFundWidget />
           </div>
         </div>

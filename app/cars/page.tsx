@@ -288,7 +288,7 @@ export default function CarsPage() {
     const isSmartMode = smartResults.length > 0;
 
     return (
-        <main className="p-6 lg:p-10 max-w-[1400px] mx-auto space-y-6 min-h-screen">
+        <main className="p-4 lg:p-10 max-w-[1400px] mx-auto space-y-6 min-h-screen pb-24 lg:pb-6">
             {/* Header */}
             <div className="flex items-center justify-between">
                 <div>
@@ -470,7 +470,7 @@ export default function CarsPage() {
 
             {/* Search Filters */}
             <div className="bg-[#1C1C1E] border border-white/10 rounded-2xl p-6">
-                <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3 lg:gap-4">
                     <div>
                         <label className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-1.5 block">Marca</label>
                         <select
@@ -653,7 +653,7 @@ export default function CarsPage() {
                                             >
                                                 <div className="px-5 pb-5 space-y-4 border-t border-white/5 pt-4">
                                                     {car.price > 0 && (
-                                                        <div className="grid grid-cols-4 gap-3">
+                                                        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                                                             <div className="bg-blue-500/10 border border-blue-500/20 rounded-xl p-3 text-center">
                                                                 <p className="text-[10px] text-gray-500 uppercase tracking-widest mb-1">Compra 🇩🇪</p>
                                                                 <p className="text-xl font-black text-white font-mono">€{fmt(car.price)}</p>

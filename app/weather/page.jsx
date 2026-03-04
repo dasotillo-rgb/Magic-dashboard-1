@@ -152,10 +152,10 @@ export default function WeatherDashboard() {
   ];
 
   return (
-    <div className="flex flex-col min-h-screen bg-[#09090B] font-sans text-gray-200 p-6 max-w-[1600px] mx-auto space-y-6 relative">
+    <div className="flex flex-col min-h-screen bg-[#09090B] font-sans text-gray-200 p-4 lg:p-6 max-w-[1600px] mx-auto space-y-4 lg:space-y-6 relative pb-24 lg:pb-6">
 
       {/* --- HEADER --- */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-wrap items-start justify-between gap-3">
         <div className="flex flex-col gap-1">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500/20 to-purple-500/10 border border-blue-500/20 flex items-center justify-center shrink-0 shadow-[0_0_15px_rgba(59,130,246,0.15)]">
@@ -182,7 +182,7 @@ export default function WeatherDashboard() {
       </div>
 
       {/* --- BALANCES & PNL --- */}
-      <div className="flex items-center gap-3 flex-wrap mb-8">
+      <div className="flex items-center gap-3 overflow-x-auto no-scrollbar pb-1 mb-4 lg:mb-8">
         <BalanceCards />
 
         {/* Custom Weather P&L Card */}
@@ -202,7 +202,7 @@ export default function WeatherDashboard() {
       {/* --- CONNECTION INPUT --- */}
       <div className="flex flex-col gap-2 mb-8">
         <div className="flex items-center gap-3">
-          <div className="flex items-center gap-2 bg-[#1C1C1E]/80 border border-[#27272A] rounded-lg px-3 py-1.5 w-80 shadow-inner">
+          <div className="flex items-center gap-2 bg-[#1C1C1E]/80 border border-[#27272A] rounded-lg px-3 py-1.5 w-full sm:w-80 shadow-inner">
             <Zap className="h-4 w-4 text-blue-400" />
             <input
               type="text"
@@ -237,7 +237,7 @@ export default function WeatherDashboard() {
       </div>
 
       {/* --- TAB NAVIGATION --- */}
-      <div className="flex gap-2 mb-6 border-b border-[#27272A] pb-0">
+      <div className="flex gap-2 mb-4 lg:mb-6 border-b border-[#27272A] pb-0 overflow-x-auto no-scrollbar">
         {tabs.map(t => (
           <button
             key={t.id}

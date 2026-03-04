@@ -229,7 +229,7 @@ function ProjectsContent() {
     };
 
     return (
-        <main className="p-6 lg:p-10 max-w-[1600px] mx-auto min-h-screen space-y-8 relative">
+        <main className="p-4 lg:p-10 max-w-[1600px] mx-auto min-h-screen space-y-6 lg:space-y-8 relative pb-24 lg:pb-6">
             <AnimatePresence>
                 {blueprintId && <ProjectBlueprintModal id={blueprintId} onClose={closeBlueprint} />}
             </AnimatePresence>
@@ -247,10 +247,10 @@ function ProjectsContent() {
                 </button>
             </header>
 
-            <div className="grid grid-cols-12 gap-6">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
                 {/* PROJECTS EVOLUTION */}
                 <div className="col-span-12 lg:col-span-8 flex flex-col gap-6">
-                    <section className="bg-[#1C1C1E]/60 border border-white/10 rounded-[2rem] p-8">
+                    <section className="bg-[#1C1C1E]/60 border border-white/10 rounded-2xl lg:rounded-[2rem] p-5 lg:p-8">
                         <h2 className="text-xs font-bold text-gray-500 uppercase tracking-[0.2em] mb-8 flex items-center gap-2">
                             <TrendingUp className="h-4 w-4" /> Evolución de Proyectos
                         </h2>
@@ -299,7 +299,7 @@ function ProjectsContent() {
                     </section>
 
                     {/* QUICK TASKS AREA */}
-                    <section className="bg-[#1C1C1E]/60 border border-white/10 rounded-[2rem] p-8">
+                    <section className="bg-[#1C1C1E]/60 border border-white/10 rounded-2xl lg:rounded-[2rem] p-5 lg:p-8">
                         <h2 className="text-xs font-bold text-gray-500 uppercase tracking-[0.2em] mb-6 flex items-center gap-2">
                             <Clock className="h-4 w-4" /> Próximos Pasos (Backlog)
                         </h2>
@@ -322,7 +322,7 @@ function ProjectsContent() {
 
                 {/* SIDEBAR: RECOMMENDATIONS */}
                 <div className="col-span-12 lg:col-span-4 space-y-6">
-                    <section className="bg-[#1C1C1E]/80 border border-orange-500/20 rounded-[2rem] p-8 relative overflow-hidden">
+                    <section className="bg-[#1C1C1E]/80 border border-orange-500/20 rounded-2xl lg:rounded-[2rem] p-5 lg:p-8 relative overflow-hidden">
                         <div className="absolute top-0 right-0 w-32 h-32 bg-orange-500/10 blur-[60px]" />
                         <h2 className="text-xs font-bold text-orange-400 uppercase tracking-[0.2em] mb-6 flex items-center gap-2">
                             <ArrowUpRight className="h-4 w-4" /> AI Recommendations

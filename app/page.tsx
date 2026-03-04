@@ -140,7 +140,7 @@ export default function Dashboard() {
   if (!isClient) return null;
 
   return (
-    <main className="p-6 lg:p-10 max-w-[1600px] mx-auto space-y-6 relative min-h-screen">
+    <main className="p-4 lg:p-10 max-w-[1600px] mx-auto space-y-6 relative min-h-screen pb-24 lg:pb-6">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
@@ -156,7 +156,7 @@ export default function Dashboard() {
       {/* Draggable Grid */}
       <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
         <SortableContext items={items.map(i => i.id)} strategy={rectSortingStrategy}>
-          <div className="grid grid-cols-12 gap-5">
+          <div className="grid grid-cols-12 gap-3 lg:gap-5">
             {items.map((item) => (
               <SortableWidget key={item.id} id={item.id} className={`col-span-12 ${item.colSpan}`}>
                 {renderWidget(item.id)}

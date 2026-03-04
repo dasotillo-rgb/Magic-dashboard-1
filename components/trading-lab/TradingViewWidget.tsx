@@ -46,7 +46,7 @@ const TradingViewWidget: React.FC = () => {
   }, []);
 
   return (
-    <div className="h-full w-full bg-[#1C1C1E]/60 border border-white/10 rounded-[2rem] overflow-hidden">
+    <div className="h-full w-full bg-[#1C1C1E]/60 border border-white/10 rounded-xl lg:rounded-[2rem] overflow-hidden max-w-full">
       <div id="tradingview-widget-container" ref={container} className="h-full w-full" />
     </div>
   );

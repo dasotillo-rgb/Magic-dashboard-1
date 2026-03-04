@@ -179,7 +179,7 @@ export default function HFTV2Dashboard() {
     <div className="flex flex-col min-h-[calc(100vh-2rem)] bg-[#09090B] font-sans text-gray-200">
 
       {/* ===== HEADER ===== */}
-      <header className="flex items-center justify-between flex-shrink-0 px-6 py-4 bg-[#18181B] border-b border-[#27272A]">
+      <header className="flex flex-wrap items-center justify-between flex-shrink-0 px-4 lg:px-6 py-3 lg:py-4 bg-[#18181B] border-b border-[#27272A] gap-2">
         <div className="flex items-center gap-4">
           <div className="w-10 h-10 rounded-xl bg-[#00FF41]/10 border border-[#00FF41]/20 flex items-center justify-center flex-shrink-0">
             <Activity className="h-5 w-5 text-[#00FF41]" />
@@ -207,10 +207,10 @@ export default function HFTV2Dashboard() {
       </header>
 
       {/* ===== MAIN LAYOUT ===== */}
-      <div className="flex-1 overflow-y-auto p-6 max-w-[1400px] mx-auto w-full flex flex-col gap-6">
+      <div className="flex-1 overflow-y-auto p-4 lg:p-6 max-w-[1400px] mx-auto w-full flex flex-col gap-6 pb-24 lg:pb-6">
 
         {/* --- BALANCES & PNL --- */}
-        <div className="flex items-center gap-3 flex-wrap">
+        <div className="flex items-center gap-3 overflow-x-auto no-scrollbar pb-1">
           <BalanceCards />
 
           {/* Custom PnL Card matching BalanceCards style */}
@@ -254,7 +254,7 @@ export default function HFTV2Dashboard() {
         </div>
 
         {/* --- API CONNECTION --- */}
-        <div className="flex gap-3 items-center w-full max-w-md">
+        <div className="flex gap-3 items-center w-full max-w-full sm:max-w-md">
           <div className="relative flex-1">
             <Server className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
             <input
@@ -416,7 +416,7 @@ export default function HFTV2Dashboard() {
         {/* --- METRICS --- */}
         {metrics && metrics.total_trades > 0 && (
           <Card title="Performance" icon={<LayoutList className="h-5 w-5 text-indigo-400" />}>
-            <div className="grid grid-cols-3 md:grid-cols-7 gap-4">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-7 gap-4">
               <BigNum label="Trades" value={metrics.total_trades} small />
               <BigNum label="Win Rate" value={`${fmt(metrics.win_rate, 1)}%`} colorClass={metrics.win_rate >= 50 ? 'text-[#00FF41]' : 'text-red-500'} small />
               <BigNum label="Total PnL" value={fmtUsd(metrics.total_pnl)} colorClass={metrics.total_pnl >= 0 ? 'text-[#00FF41]' : 'text-red-500'} small />
@@ -451,7 +451,7 @@ export default function HFTV2Dashboard() {
 
           {/* Table Container */}
           <div className="bg-[#18181B] border border-[#27272A] rounded-b-xl rounded-tr-xl overflow-hidden shadow-lg">
-            <div className="max-h-[400px] overflow-y-auto custom-scrollbar">
+            <div className="max-h-[400px] overflow-y-auto overflow-x-auto custom-scrollbar">
               {tab === "live" && (
                 liveTrades.length > 0 ? (
                   <table className="w-full border-collapse text-left">
