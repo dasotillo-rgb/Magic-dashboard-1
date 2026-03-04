@@ -142,12 +142,14 @@ export default function Dashboard() {
   return (
     <main className="p-4 lg:p-10 max-w-[1600px] mx-auto space-y-6 relative min-h-screen pb-24 lg:pb-6">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between gap-3 flex-wrap">
         <div>
-          <h1 className="text-3xl font-bold text-white tracking-tight">Overview</h1>
+          <h1 className="text-2xl lg:text-3xl font-bold text-white tracking-tight">Overview</h1>
           <p className="text-sm text-gray-400 mt-1">System Operational <span className="inline-block w-2 h-2 rounded-full bg-[#00FF41] ml-1 align-middle" /></p>
         </div>
-        <WeatherWidget />
+        <div className="hidden sm:block">
+          <WeatherWidget />
+        </div>
       </div>
 
       {/* Balance Cards Row */}

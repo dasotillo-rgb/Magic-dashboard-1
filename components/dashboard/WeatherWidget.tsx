@@ -69,7 +69,7 @@ const WeatherWidget: React.FC = () => {
     if (!data) return null;
 
     return (
-        <div className="flex items-center gap-4 px-5 py-2.5 bg-white/5 rounded-full border border-white/10 shadow-lg backdrop-blur-md">
+        <div className="flex items-center gap-3 px-4 py-2 bg-white/5 rounded-full border border-white/10 shadow-lg backdrop-blur-md max-w-full overflow-hidden">
             {/* Location */}
             <div className="flex items-center gap-2 border-r border-white/10 pr-4">
                 <MapPin className="h-3.5 w-3.5 text-orange-400" />

@@ -600,7 +600,7 @@ export default function CarsPage() {
                                     className="bg-[#1C1C1E] border border-white/10 rounded-2xl hover:border-white/20 transition-all"
                                 >
                                     <div
-                                        className="flex items-center justify-between p-5 cursor-pointer"
+                                        className="flex flex-col sm:flex-row items-start sm:items-center justify-between p-4 lg:p-5 cursor-pointer gap-3"
                                         onClick={() => setExpanded(isExpanded ? null : car.id)}
                                     >
                                         <div className="flex items-center gap-4 min-w-0 flex-1">
@@ -623,11 +623,11 @@ export default function CarsPage() {
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className="flex items-center gap-4 shrink-0">
+                                        <div className="flex items-center gap-3 shrink-0 w-full sm:w-auto justify-between sm:justify-end">
                                             {car.price > 0 && (
-                                                <div className="text-right">
-                                                    <p className="text-lg font-black text-white font-mono">€{fmt(car.price)}</p>
-                                                    <div className="flex items-center gap-2 justify-end mt-0.5">
+                                                <div className="sm:text-right">
+                                                    <p className="text-base lg:text-lg font-black text-white font-mono">€{fmt(car.price)}</p>
+                                                    <div className="flex items-center gap-2 mt-0.5">
                                                         <span className="text-[10px] text-gray-500 font-mono">imp. €{fmt(car.importCost)}</span>
                                                         {car.estimatedProfit > 0 ? (
                                                             <span className={`text-[10px] font-bold font-mono px-1.5 py-0.5 rounded border ${ratingColor(car.profitRating)}`}>
@@ -639,7 +639,7 @@ export default function CarsPage() {
                                                     </div>
                                                 </div>
                                             )}
-                                            {isExpanded ? <ChevronUp className="h-5 w-5 text-gray-500" /> : <ChevronDown className="h-5 w-5 text-gray-500" />}
+                                            {isExpanded ? <ChevronUp className="h-5 w-5 text-gray-500 shrink-0" /> : <ChevronDown className="h-5 w-5 text-gray-500 shrink-0" />}
                                         </div>
                                     </div>
 
@@ -653,22 +653,22 @@ export default function CarsPage() {
                                             >
                                                 <div className="px-5 pb-5 space-y-4 border-t border-white/5 pt-4">
                                                     {car.price > 0 && (
-                                                        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                                                            <div className="bg-blue-500/10 border border-blue-500/20 rounded-xl p-3 text-center">
-                                                                <p className="text-[10px] text-gray-500 uppercase tracking-widest mb-1">Compra 🇩🇪</p>
-                                                                <p className="text-xl font-black text-white font-mono">€{fmt(car.price)}</p>
+                                                        <div className="grid grid-cols-2 gap-2 sm:gap-3">
+                                                            <div className="bg-blue-500/10 border border-blue-500/20 rounded-xl p-2 sm:p-3 text-center">
+                                                                <p className="text-[9px] sm:text-[10px] text-gray-500 uppercase tracking-widest mb-1">Compra 🇩🇪</p>
+                                                                <p className="text-base sm:text-xl font-black text-white font-mono">€{fmt(car.price)}</p>
                                                             </div>
-                                                            <div className="bg-orange-500/10 border border-orange-500/20 rounded-xl p-3 text-center">
-                                                                <p className="text-[10px] text-gray-500 uppercase tracking-widest mb-1">Importar</p>
-                                                                <p className="text-xl font-black text-white font-mono">€{fmt(car.importCost)}</p>
+                                                            <div className="bg-orange-500/10 border border-orange-500/20 rounded-xl p-2 sm:p-3 text-center">
+                                                                <p className="text-[9px] sm:text-[10px] text-gray-500 uppercase tracking-widest mb-1">Importar</p>
+                                                                <p className="text-base sm:text-xl font-black text-white font-mono">€{fmt(car.importCost)}</p>
                                                             </div>
-                                                            <div className="bg-[#00FF41]/10 border border-[#00FF41]/20 rounded-xl p-3 text-center">
-                                                                <p className="text-[10px] text-gray-500 uppercase tracking-widest mb-1">Venta 🇪🇸</p>
-                                                                <p className="text-xl font-black text-[#00FF41] font-mono">€{fmt(car.estimatedESPrice)}</p>
+                                                            <div className="bg-[#00FF41]/10 border border-[#00FF41]/20 rounded-xl p-2 sm:p-3 text-center">
+                                                                <p className="text-[9px] sm:text-[10px] text-gray-500 uppercase tracking-widest mb-1">Venta 🇪🇸</p>
+                                                                <p className="text-base sm:text-xl font-black text-[#00FF41] font-mono">€{fmt(car.estimatedESPrice)}</p>
                                                             </div>
-                                                            <div className={`border rounded-xl p-3 text-center ${ratingColor(car.profitRating)}`}>
-                                                                <p className="text-[10px] text-gray-500 uppercase tracking-widest mb-1">Beneficio</p>
-                                                                <p className="text-xl font-black font-mono">+€{fmt(car.estimatedProfit)}</p>
+                                                            <div className={`border rounded-xl p-2 sm:p-3 text-center ${ratingColor(car.profitRating)}`}>
+                                                                <p className="text-[9px] sm:text-[10px] text-gray-500 uppercase tracking-widest mb-1">Beneficio</p>
+                                                                <p className="text-base sm:text-xl font-black font-mono">+€{fmt(car.estimatedProfit)}</p>
                                                                 <p className="text-[9px] mt-0.5">{ratingLabel(car.profitRating)}</p>
                                                             </div>
                                                         </div>

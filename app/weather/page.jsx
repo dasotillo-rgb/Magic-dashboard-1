@@ -267,15 +267,15 @@ export default function WeatherDashboard() {
                 <span className="text-[10px] text-gray-500 font-mono">{summary.trades} Total Executed</span>
               </div>
               <div className="p-0 overflow-x-auto">
-                <table className="w-full text-left text-xs">
+                <table className="w-full text-left text-xs min-w-[500px]">
                   <thead className="bg-[#1C1C1E]/50 text-gray-400 font-bold uppercase tracking-widest border-b border-[#27272A]">
                     <tr>
-                      <th className="px-4 py-3">City</th>
-                      <th className="px-4 py-3">Type</th>
-                      <th className="px-4 py-3">Cost</th>
-                      <th className="px-4 py-3">Payout</th>
-                      <th className="px-4 py-3">Edge</th>
-                      <th className="px-4 py-3">Status</th>
+                      <th className="px-3 py-2.5 whitespace-nowrap">City</th>
+                      <th className="px-3 py-2.5 whitespace-nowrap">Type</th>
+                      <th className="px-3 py-2.5 whitespace-nowrap">Cost</th>
+                      <th className="px-3 py-2.5 whitespace-nowrap">Payout</th>
+                      <th className="px-3 py-2.5 whitespace-nowrap">Edge</th>
+                      <th className="px-3 py-2.5 whitespace-nowrap">Status</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-[#27272A]/50 font-mono">
@@ -288,12 +288,12 @@ export default function WeatherDashboard() {
                     ) : (
                       recentTrades.map((t, i) => (
                         <tr key={i} className="hover:bg-white/[0.02] transition-colors">
-                          <td className="px-4 py-3 text-gray-300 font-sans">{t.city}</td>
-                          <td className="px-4 py-3 text-blue-400 font-bold">{t.type}</td>
-                          <td className="px-4 py-3 text-gray-400">{fmtUsd(t.cost)}</td>
-                          <td className="px-4 py-3 text-[#00FF41]">{fmtUsd(t.payout)}</td>
-                          <td className="px-4 py-3 text-amber-500">{pct(t.edge)}</td>
-                          <td className="px-4 py-3">
+                          <td className="px-3 py-2.5 text-gray-300 font-sans whitespace-nowrap">{t.city}</td>
+                          <td className="px-3 py-2.5 text-blue-400 font-bold">{t.type}</td>
+                          <td className="px-3 py-2.5 text-gray-400">{fmtUsd(t.cost)}</td>
+                          <td className="px-3 py-2.5 text-[#00FF41]">{fmtUsd(t.payout)}</td>
+                          <td className="px-3 py-2.5 text-amber-500">{pct(t.edge)}</td>
+                          <td className="px-3 py-2.5">
                             <span className={`px-2 py-0.5 rounded text-[10px] \${t.status === 'LIVE' ? 'bg-blue-500/10 text-blue-400' : 'bg-gray-800 text-gray-400'}`}>
                               {t.status}
                             </span>

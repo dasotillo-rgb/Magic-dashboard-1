@@ -431,7 +431,7 @@ export default function HFTV2Dashboard() {
         {/* --- TRADE HISTORY TABS --- */}
         <div className="flex flex-col mt-2">
           {/* Tabs */}
-          <div className="flex gap-2 mb-0">
+          <div className="flex gap-2 mb-0 overflow-x-auto no-scrollbar">
             {[
               { id: "live", label: `LIVE TRADES (${liveTrades.length})`, icon: "🔴" },
               { id: "paper", label: `PAPER TRADES (${paperTrades.length})`, icon: "📝" },
@@ -454,11 +454,11 @@ export default function HFTV2Dashboard() {
             <div className="max-h-[400px] overflow-y-auto overflow-x-auto custom-scrollbar">
               {tab === "live" && (
                 liveTrades.length > 0 ? (
-                  <table className="w-full border-collapse text-left">
+                  <table className="w-full border-collapse text-left min-w-[650px]">
                     <thead className="sticky top-0 bg-[#09090B] z-10 border-b border-[#27272A]">
                       <tr>
                         {["Time", "Side", "Entry", "Exit", "Size", "PnL", "Edge", "Note"].map((h) => (
-                          <th key={h} className="px-4 py-3 text-[10px] font-bold text-gray-500 uppercase tracking-widest">{h}</th>
+                          <th key={h} className="px-3 py-2.5 text-[10px] font-bold text-gray-500 uppercase tracking-widest whitespace-nowrap">{h}</th>
                         ))}
                       </tr>
                     </thead>
@@ -468,14 +468,14 @@ export default function HFTV2Dashboard() {
                         const pnlColor = isOpen ? 'text-amber-500' : (Number(t.pnl) >= 0 ? 'text-[#00FF41]' : 'text-red-500');
                         return (
                           <tr key={i} className="hover:bg-white/[0.02] transition-colors">
-                            <td className="px-4 py-3 text-gray-400">{t.time || "—"}</td>
-                            <td className={`px-4 py-3 font-bold ${t.side === "UP" ? 'text-[#00FF41]' : 'text-red-500'}`}>{t.side || "—"}</td>
-                            <td className="px-4 py-3 text-gray-300">{fmt(t.entry, 4)}</td>
-                            <td className="px-4 py-3 text-gray-300">{isOpen ? "—" : fmt(t.exit, 4)}</td>
-                            <td className="px-4 py-3 text-gray-500">{fmt(t.size, 1)}</td>
-                            <td className={`px-4 py-3 font-bold ${pnlColor}`}>{isOpen ? "OPEN" : fmtUsd(t.pnl)}</td>
-                            <td className="px-4 py-3 text-blue-400">{t.edge ? pct(t.edge) : "—"}</td>
-                            <td className="px-4 py-3 text-gray-500 font-sans text-[11px] truncate max-w-[200px]">{t.note || ""}</td>
+                            <td className="px-3 py-2.5 text-gray-400 whitespace-nowrap">{t.time || "—"}</td>
+                            <td className={`px-3 py-2.5 font-bold ${t.side === "UP" ? 'text-[#00FF41]' : 'text-red-500'}`}>{t.side || "—"}</td>
+                            <td className="px-3 py-2.5 text-gray-300">{fmt(t.entry, 4)}</td>
+                            <td className="px-3 py-2.5 text-gray-300">{isOpen ? "—" : fmt(t.exit, 4)}</td>
+                            <td className="px-3 py-2.5 text-gray-500">{fmt(t.size, 1)}</td>
+                            <td className={`px-3 py-2.5 font-bold ${pnlColor}`}>{isOpen ? "OPEN" : fmtUsd(t.pnl)}</td>
+                            <td className="px-3 py-2.5 text-blue-400">{t.edge ? pct(t.edge) : "—"}</td>
+                            <td className="px-3 py-2.5 text-gray-500 font-sans text-[11px] truncate max-w-[150px]">{t.note || ""}</td>
                           </tr>
                         );
                       })}
@@ -488,11 +488,11 @@ export default function HFTV2Dashboard() {
 
               {tab === "paper" && (
                 paperTrades.length > 0 ? (
-                  <table className="w-full border-collapse text-left">
+                  <table className="w-full border-collapse text-left min-w-[700px]">
                     <thead className="sticky top-0 bg-[#09090B] z-10 border-b border-[#27272A]">
                       <tr>
                         {["Time", "Side", "Entry", "Exit", "FV In", "FV Out", "Edge", "PnL $", "Reason"].map((h) => (
-                          <th key={h} className="px-4 py-3 text-[10px] font-bold text-gray-500 uppercase tracking-widest">{h}</th>
+                          <th key={h} className="px-3 py-2.5 text-[10px] font-bold text-gray-500 uppercase tracking-widest whitespace-nowrap">{h}</th>
                         ))}
                       </tr>
                     </thead>
@@ -501,15 +501,15 @@ export default function HFTV2Dashboard() {
                         const pnlColor = Number(t.pnl_total_usd) >= 0 ? 'text-[#00FF41]' : 'text-red-500';
                         return (
                           <tr key={i} className="hover:bg-white/[0.02] transition-colors">
-                            <td className="px-4 py-3 text-gray-400">{t.timestamp || "—"}</td>
-                            <td className={`px-4 py-3 font-bold ${t.side?.includes("UP") ? 'text-[#00FF41]' : 'text-red-500'}`}>{t.side?.replace("BUY_", "") || "—"}</td>
-                            <td className="px-4 py-3 text-gray-300">{fmt(t.entry_price, 3)}</td>
-                            <td className="px-4 py-3 text-gray-300">{fmt(t.exit_price, 3)}</td>
-                            <td className="px-4 py-3 text-blue-400">{fmt(t.fair_value_entry, 3)}</td>
-                            <td className="px-4 py-3 text-blue-400">{fmt(t.fair_value_exit, 3)}</td>
-                            <td className="px-4 py-3 text-indigo-400">{pct(t.edge_entry)}</td>
-                            <td className={`px-4 py-3 font-bold ${pnlColor}`}>{fmtUsd(t.pnl_total_usd)}</td>
-                            <td className="px-4 py-3 text-gray-500 font-sans text-[11px] truncate max-w-[200px]">{t.reason || ""}</td>
+                            <td className="px-3 py-2.5 text-gray-400 whitespace-nowrap">{t.timestamp || "—"}</td>
+                            <td className={`px-3 py-2.5 font-bold ${t.side?.includes("UP") ? 'text-[#00FF41]' : 'text-red-500'}`}>{t.side?.replace("BUY_", "") || "—"}</td>
+                            <td className="px-3 py-2.5 text-gray-300">{fmt(t.entry_price, 3)}</td>
+                            <td className="px-3 py-2.5 text-gray-300">{fmt(t.exit_price, 3)}</td>
+                            <td className="px-3 py-2.5 text-blue-400">{fmt(t.fair_value_entry, 3)}</td>
+                            <td className="px-3 py-2.5 text-blue-400">{fmt(t.fair_value_exit, 3)}</td>
+                            <td className="px-3 py-2.5 text-indigo-400">{pct(t.edge_entry)}</td>
+                            <td className={`px-3 py-2.5 font-bold ${pnlColor}`}>{fmtUsd(t.pnl_total_usd)}</td>
+                            <td className="px-3 py-2.5 text-gray-500 font-sans text-[11px] truncate max-w-[150px]">{t.reason || ""}</td>
                           </tr>
                         );
                       })}
