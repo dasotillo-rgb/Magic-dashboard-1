@@ -1,0 +1,35 @@
+import { NextResponse } from 'next/server';
+
+const BASE = process.env.APE_SERVER || 'http://51.21.170.68:5000';
+const TOKEN = process.env.APE_API_TOKEN || '';
+const TIMEOUT_MS = 8_000;
+
+export const dynamic = 'force-dynamic';
+
+export async function GET() {
+    const controller = new AbortController();
+    const tid = setTimeout(() => controller.abort(), TIMEOUT_MS);
+
+    try {
+        const res = await fetch(`${BASE}/smart-money`, {
+            signal: controller.signal,
+            cache: 'no-store',
+            headers: {
+                'Content-Type': 'application/json',
+                'x-api-token': TOKEN,
+            },
+        });
+        clearTimeout(tid);
+
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const json = await res.json();
+        return NextResponse.json({ ...json, fetched_at: Date.now() });
+    } catch (err) {
+        clearTimeout(tid);
+        return NextResponse.json({
+            active_whale_markets: [],
+            fetched_at: Date.now(),
+            offline: true,
+        }, { status: 200 });
+    }
+}

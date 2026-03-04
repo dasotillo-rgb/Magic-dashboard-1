@@ -1,12 +1,14 @@
 'use client';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { LayoutGrid, LineChart, Brain, Briefcase, Cog, Zap, Car } from 'lucide-react';
+import { LayoutGrid, LineChart, Brain, Briefcase, Cog, Zap, Car, Activity, CloudLightning } from 'lucide-react';
 
 const navItems = [
   { href: "/", icon: LayoutGrid, label: "Overview" },
   { href: "/trading", icon: LineChart, label: "Trading Lab" },
   { href: "/cars", icon: Car, label: "Car Search" },
+  { href: "/hft", icon: Activity, label: "HFT V2 Bot" },
+  { href: "/weather", icon: CloudLightning, label: "Weather Bot" },
   { href: "/brain", icon: Brain, label: "Brain Chat" },
   { href: "/projects", icon: Briefcase, label: "Projects" },
   { href: "/settings", icon: Cog, label: "Settings" },

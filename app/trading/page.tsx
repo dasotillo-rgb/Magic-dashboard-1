@@ -10,6 +10,8 @@ const AccountPanel = dynamic(() => import('@/components/trading-lab/AccountPanel
 const OrdersPanel = dynamic(() => import('@/components/trading-lab/OrdersPanel'), { ssr: false });
 const TradePanel = dynamic(() => import('@/components/trading-lab/TradePanel'), { ssr: false });
 const BotPanel = dynamic(() => import('@/components/trading-lab/BotPanel'), { ssr: false });
+const PolymarketFundWidget = dynamic(() => import('@/components/dashboard/PolymarketFundWidget'), { ssr: false });
+const L3SettingsWidget = dynamic(() => import('@/components/dashboard/L3SettingsWidget'), { ssr: false });
 
 const SYMBOLS = [
   { label: 'BTC/USDT', value: 'BTC_USDT' },
@@ -171,10 +173,10 @@ export default function TradingPage() {
 
       {/* ===== MAIN LAYOUT ===== */}
       <div className="flex-1 grid grid-cols-[1fr_320px] gap-4 min-h-0 px-4 pb-4">
-        {/* Left: Chart */}
-        <div className="min-h-0 flex flex-col gap-3 bg-[#18181B] border border-[#27272A] rounded-xl overflow-hidden shadow-sm">
+        {/* Left Column (Chart + Bots) */}
+        <div className="flex flex-col gap-3 min-h-0">
           {/* Chart Area */}
-          <div className="flex-1 relative">
+          <div className="flex-1 bg-[#18181B] border border-[#27272A] rounded-xl overflow-hidden shadow-sm flex flex-col relative">
             {chartMode === 'custom' ? (
               <>
                 <PionexChart key={`custom-${chartKey}`} symbol={symbol} interval={interval} />
@@ -188,6 +190,11 @@ export default function TradingPage() {
               <TvWidget key={`tv-${chartKey}`} symbol={getTvSymbol(symbol)} interval="D" theme="dark" />
             )}
           </div>
+
+          {/* Bottom: Polymarket Quant Fund — full width */}
+          <div className="h-[310px]">
+            <PolymarketFundWidget />
+          </div>
         </div>
 
         {/* Right: Panels */}
@@ -200,6 +207,11 @@ export default function TradingPage() {
           {/* Bot Panel (New) */}
           <div className="flex-none">
             <BotPanel symbol={symbol} />
+          </div>
+
+          {/* L3 Settings Panel */}
+          <div className="flex-none">
+            <L3SettingsWidget />
           </div>
 
           {/* Account Panel */}

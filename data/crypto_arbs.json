@@ -1,0 +1,20 @@
+{
+    "detected_at": "2026-02-19T14:30:00Z",
+    "arbitrages": [
+        {
+            "question": "Will Bitcoin break $100k in 2026?",
+            "strategy": "Polymarket vs Kalshi (5m trend: Bullish)",
+            "net_profit_pct": 12.5
+        },
+        {
+            "question": "Fed Interest Rate Hike March 2026",
+            "strategy": "Polymarket vs PredictIt (5m trend: Neutral)",
+            "net_profit_pct": 8.2
+        },
+        {
+            "question": "SpaceX Starship Launch Success",
+            "strategy": "Kalshi vs Insight Prediction (5m trend: Bearish)",
+            "net_profit_pct": 5.1
+        }
+    ]
+}

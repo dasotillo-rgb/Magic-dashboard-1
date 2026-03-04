@@ -108,6 +108,7 @@ const MODELS: Record<string, { value: string; label: string }[]> = {
         { value: 'x1', label: 'X1' }, { value: '1er', label: 'Serie 1' },
     ],
     'mercedes-benz': [
+        { value: 'suv', label: 'Todos los SUV' },
         { value: 'c-klasse', label: 'Clase C' }, { value: 'glc', label: 'GLC' },
         { value: 'e-klasse', label: 'Clase E' }, { value: 'a-klasse', label: 'Clase A' },
     ],
@@ -123,7 +124,7 @@ const MODELS: Record<string, { value: string; label: string }[]> = {
     'volvo': [{ value: 'xc60', label: 'XC60' }, { value: 'xc90', label: 'XC90' }],
 };
 
-const YEARS = [2022, 2023, 2024, 2025];
+const YEARS = [2019, 2020, 2021, 2022, 2023, 2024, 2025];
 const KM_OPTIONS = [
     { value: '', label: 'Sin límite' },
     { value: '50000', label: '< 50.000 km' },
@@ -133,6 +134,53 @@ const KM_OPTIONS = [
 ];
 
 const fmt = (n: number) => n.toLocaleString('de-DE');
+
+// Mobile.de IDs Mapping
+const MOBILE_MAP: Record<string, { id: number; models: Record<string, number> }> = {
+    'bmw': {
+        id: 3500,
+        models: { 'x1': 4, 'x3': 48, 'x5': 49, 'x7': 85, '3er': 15, '5er': 17, '1er': 3 }
+    },
+    'mercedes-benz': {
+        id: 17200,
+        models: { 'c-klasse': 36, 'e-klasse': 45, 'gla': 264, 'glb': 282, 'glc': 281, 'gle': 161, 'a-klasse': 217 } // Approx IDs
+    },
+    'audi': {
+        id: 1900,
+        models: { 'a3': 8, 'a4': 9, 'a6': 10, 'q3': 12, 'q5': 14, 'q7': 15, 'q8': 106 }
+    },
+    'volkswagen': {
+        id: 25200,
+        models: { 'golf': 14, 'passat': 25, 'tiguan': 36, 'id.4': 275 }
+    },
+    'porsche': {
+        id: 20100,
+        models: { 'macan': 23, 'cayenne': 18 }
+    },
+    'volvo': {
+        id: 25100,
+        models: { 'xc60': 46, 'xc90': 47 }
+    }
+};
+
+const getMobileDeUrl = (make: string, model: string, year: number, maxKm: string, extras: string) => {
+    const map = MOBILE_MAP[make];
+    if (!map) return 'https://suchen.mobile.de/fahrzeuge/search.html?vc=Car&cn=DE';
+
+    let url = `https://suchen.mobile.de/fahrzeuge/search.html?isSearchRequest=true&vc=Car&dam=0&cn=DE&minFirstRegistrationDate=${year}`;
+    if (maxKm) url += `&maxMileage=${maxKm}`;
+    url += `&makeModelVariant1.makeId=${map.id}`;
+
+    if (map.models[model]) {
+        url += `&makeModelVariant1.modelId=${map.models[model]}`;
+    } else if (model === 'suv') {
+        url += `&categories=OffRoad`;
+    }
+    if (extras) {
+        url += `&makeModelVariant1.modelDescription=${encodeURIComponent(extras)}`;
+    }
+    return url;
+};
 
 type ChatMessage = {
     role: 'user' | 'assistant';
@@ -146,6 +194,7 @@ export default function CarsPage() {
     const [model, setModel] = useState('x3');
     const [yearFrom, setYearFrom] = useState(2022);
     const [maxKm, setMaxKm] = useState('100000');
+    const [extras, setExtras] = useState('');
     const [listings, setListings] = useState<CarListing[]>([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
@@ -167,6 +216,7 @@ export default function CarsPage() {
         try {
             const params = new URLSearchParams({ make, model, yearFrom: String(yearFrom) });
             if (maxKm) params.set('maxKm', maxKm);
+            if (extras) params.set('extras', extras);
             const res = await fetch(`/api/cars?${params.toString()}`);
             const data = await res.json();
             if (data.error) throw new Error(data.error);
@@ -253,8 +303,8 @@ export default function CarsPage() {
                 <button
                     onClick={() => setSmartSearchOpen(!smartSearchOpen)}
                     className={`text-xs font-bold transition-all px-4 py-2.5 rounded-xl flex items-center gap-2 border ${smartSearchOpen
-                            ? 'bg-purple-500/20 text-purple-400 border-purple-500/30 hover:bg-purple-500/30'
-                            : 'bg-gradient-to-r from-purple-500/20 to-blue-500/20 text-purple-300 border-purple-500/20 hover:border-purple-500/40'
+                        ? 'bg-purple-500/20 text-purple-400 border-purple-500/30 hover:bg-purple-500/30'
+                        : 'bg-gradient-to-r from-purple-500/20 to-blue-500/20 text-purple-300 border-purple-500/20 hover:border-purple-500/40'
                         }`}
                 >
                     <Sparkles className="h-4 w-4" />
@@ -322,8 +372,8 @@ export default function CarsPage() {
                                         )}
                                         <div className={`max-w-[80%] space-y-2 ${msg.role === 'user' ? 'items-end' : ''}`}>
                                             <div className={`rounded-xl px-3.5 py-2.5 text-xs leading-relaxed ${msg.role === 'user'
-                                                    ? 'bg-blue-500/20 text-blue-100 rounded-tr-sm'
-                                                    : 'bg-white/5 text-gray-300 rounded-tl-sm'
+                                                ? 'bg-blue-500/20 text-blue-100 rounded-tr-sm'
+                                                : 'bg-white/5 text-gray-300 rounded-tl-sm'
                                                 }`}>
                                                 {msg.content}
                                             </div>
@@ -465,6 +515,16 @@ export default function CarsPage() {
                             {KM_OPTIONS.map(k => (<option key={k.value} value={k.value} className="bg-[#1C1C1E]">{k.label}</option>))}
                         </select>
                     </div>
+                    <div>
+                        <label className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-1.5 block">Extras / Modelo Específico</label>
+                        <input
+                            type="text"
+                            value={extras}
+                            onChange={(e) => setExtras(e.target.value)}
+                            placeholder="Ej: M Sport, AMG, Techo..."
+                            className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white text-sm font-medium focus:outline-none focus:border-blue-500/50 transition-colors placeholder:text-gray-600"
+                        />
+                    </div>
                     <div className="flex items-end">
                         <button
                             onClick={handleSearch}
@@ -499,10 +559,23 @@ export default function CarsPage() {
             {(hasSearched || isSmartMode) && (
                 <div className="space-y-3">
                     <div className="flex items-center justify-between">
-                        <p className="text-sm text-gray-400">
-                            {loading ? 'Buscando...' : `${displayListings.length} resultados encontrados`}
-                            {totalFound > displayListings.length && !isSmartMode && ` (${totalFound} total)`}
-                        </p>
+                        <div className="flex items-center gap-4">
+                            <p className="text-sm text-gray-400">
+                                {loading ? 'Buscando...' : `${displayListings.length} resultados encontrados`}
+                                {totalFound > displayListings.length && !isSmartMode && ` (${totalFound} total)`}
+                            </p>
+                            {!loading && (
+                                <a
+                                    href={getMobileDeUrl(make, model, yearFrom, maxKm, extras)}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="text-xs bg-orange-500/10 hover:bg-orange-500/20 text-orange-400 px-3 py-1.5 rounded-lg border border-orange-500/20 transition-colors flex items-center gap-1.5"
+                                >
+                                    <ExternalLink className="h-3 w-3" />
+                                    Buscar en Mobile.de
+                                </a>
+                            )}
+                        </div>
                         <div className="flex items-center gap-2 text-xs text-gray-500">
                             <TrendingUp className="h-3 w-3" /> Ordenado por profit
                         </div>

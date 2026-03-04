@@ -36,7 +36,7 @@ const CollapsibleWidget: React.FC<Props> = ({
             {/* Widget content — scrollable when collapsed, natural when expanded */}
             {/* Widget content — scrollable when collapsed, natural when expanded */}
             <div
-                className={`flex-1 transition-all duration-300 ease-in-out ${collapsed ? 'overflow-hidden' : 'overflow-visible'
+                className={`flex-1 transition-all duration-300 ease-in-out ${collapsed ? 'overflow-y-auto' : 'overflow-visible'
                     }`}
                 style={collapsed ? { maxHeight: `${compactHeight}px` } : {}}
             >

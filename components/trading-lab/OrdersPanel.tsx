@@ -76,9 +76,14 @@ const OrdersPanel: React.FC<Props> = ({ symbol }) => {
     useEffect(() => {
         fetchOrders();
         fetchTicker();
-        const iv = setInterval(fetchTicker, 5000);
-        return () => clearInterval(iv);
+        const tickerIv = setInterval(fetchTicker, 5000);
+        const ordersIv = setInterval(fetchOrders, 30_000); // refresh orders every 30s
+        return () => {
+            clearInterval(tickerIv);
+            clearInterval(ordersIv);
+        };
     }, [symbol, tab]);
+
 
     return (
         <div className="bg-[#1C1C1E] border border-white/10 rounded-2xl p-4 h-full flex flex-col">

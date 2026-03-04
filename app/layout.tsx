@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { DesktopSidebar } from "@/components/Sidebar";
+import { MobileNavbar } from "@/components/MobileNavbar";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
@@ -31,9 +32,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body className={`${inter.className} bg-[#0A0A0A] text-white`}>
         <div className="flex min-h-screen">
-          <DesktopSidebar />
-          <main className="flex-1">{children}</main>
+          <div className="hidden lg:block">
+            <DesktopSidebar />
+          </div>
+          <main className="flex-1 pb-20 lg:pb-0">{children}</main>
         </div>
+        <MobileNavbar />
       </body>
     </html>
   );

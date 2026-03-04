@@ -28,6 +28,9 @@ import WeatherWidget from '@/components/dashboard/WeatherWidget';
 import CollapsibleWidget from '@/components/dashboard/CollapsibleWidget';
 import ApeChat from '@/components/dashboard/ApeChat';
 import NotificationSystem from '@/components/dashboard/NotificationSystem';
+import BalanceCards from '@/components/dashboard/BalanceCards';
+import PolymarketFundWidget from '@/components/dashboard/PolymarketFundWidget';
+import L3SettingsWidget from '@/components/dashboard/L3SettingsWidget';
 
 const hardcodedData = {
   assets: { value: 128430.22, change: 12.5 },
@@ -40,12 +43,14 @@ const hardcodedData = {
 };
 
 const DEFAULT_ITEMS = [
+  { id: 'fund', colSpan: 'lg:col-span-12' },
   { id: 'cars', colSpan: 'lg:col-span-4' },
   { id: 'tasks', colSpan: 'lg:col-span-4' },
   { id: 'sentiment', colSpan: 'lg:col-span-4' },
   { id: 'orders', colSpan: 'lg:col-span-12' },
   { id: 'console', colSpan: 'lg:col-span-7' },
   { id: 'market', colSpan: 'lg:col-span-5' },
+  { id: 'l3-settings', colSpan: 'lg:col-span-4' },
 ];
 
 export default function Dashboard() {
@@ -54,23 +59,9 @@ export default function Dashboard() {
 
   useEffect(() => {
     setIsClient(true);
-    const saved = localStorage.getItem('dashboard_layout');
-    if (saved) {
-      try {
-        const parsed = JSON.parse(saved);
-        const migrated = parsed.map((item: any) => {
-          if (item.id === 'location') return { ...item, id: 'tasks' };
-          if (item.id === 'signal') return { ...item, id: 'sentiment' };
-          if (item.id === 'assets') return { ...item, id: 'cars' };
-          return item;
-        });
-        setItems(migrated);
-      } catch (e) {
-        setItems(DEFAULT_ITEMS);
-      }
-    } else {
-      setItems(DEFAULT_ITEMS);
-    }
+    // Always use DEFAULT_ITEMS to purge stale bot-widget layouts
+    localStorage.removeItem('dashboard_layout');
+    setItems(DEFAULT_ITEMS);
   }, []);
 
   const sensors = useSensors(
@@ -93,6 +84,12 @@ export default function Dashboard() {
 
   const renderWidget = (id: string) => {
     switch (id) {
+      case 'fund':
+        return (
+          <CollapsibleWidget id="fund" compactHeight={220}>
+            <PolymarketFundWidget />
+          </CollapsibleWidget>
+        );
       case 'cars':
         return (
           <CollapsibleWidget id="cars" compactHeight={280}>
@@ -120,13 +117,19 @@ export default function Dashboard() {
       case 'market':
         return (
           <CollapsibleWidget id="market" compactHeight={280}>
-            <MarketPulseWidget data={hardcodedData.marketPulse} borderColor="border-blue-500/20" />
+            <MarketPulseWidget borderColor="border-blue-500/20" />
           </CollapsibleWidget>
         );
       case 'orders':
         return (
           <CollapsibleWidget id="orders" compactHeight={200}>
             <OrdersWidget borderColor="border-[#00FF41]/20" />
+          </CollapsibleWidget>
+        );
+      case 'l3-settings':
+        return (
+          <CollapsibleWidget id="l3-settings" compactHeight={180}>
+            <L3SettingsWidget />
           </CollapsibleWidget>
         );
       default:
@@ -146,6 +149,9 @@ export default function Dashboard() {
         </div>
         <WeatherWidget />
       </div>
+
+      {/* Balance Cards Row */}
+      <BalanceCards />
 
       {/* Draggable Grid */}
       <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
