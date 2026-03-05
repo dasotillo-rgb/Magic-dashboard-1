@@ -10,7 +10,6 @@ const AccountPanel = dynamic(() => import('@/components/trading-lab/AccountPanel
 const OrdersPanel = dynamic(() => import('@/components/trading-lab/OrdersPanel'), { ssr: false });
 const TradePanel = dynamic(() => import('@/components/trading-lab/TradePanel'), { ssr: false });
 const BotPanel = dynamic(() => import('@/components/trading-lab/BotPanel'), { ssr: false });
-const PolymarketFundWidget = dynamic(() => import('@/components/dashboard/PolymarketFundWidget'), { ssr: false });
 const L3SettingsWidget = dynamic(() => import('@/components/dashboard/L3SettingsWidget'), { ssr: false });
 
 const SYMBOLS = [
@@ -189,11 +188,6 @@ export default function TradingPage() {
             ) : (
               <TvWidget key={`tv-${chartKey}`} symbol={getTvSymbol(symbol)} interval="D" theme="dark" />
             )}
-          </div>
-
-          {/* Bottom: Polymarket Quant Fund — full width */}
-          <div className="min-h-[280px] lg:h-[310px]">
-            <PolymarketFundWidget />
           </div>
         </div>
 

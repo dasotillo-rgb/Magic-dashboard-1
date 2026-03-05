@@ -29,7 +29,7 @@ import CollapsibleWidget from '@/components/dashboard/CollapsibleWidget';
 import ApeChat from '@/components/dashboard/ApeChat';
 import NotificationSystem from '@/components/dashboard/NotificationSystem';
 import BalanceCards from '@/components/dashboard/BalanceCards';
-import PolymarketFundWidget from '@/components/dashboard/PolymarketFundWidget';
+import HFTWidget from '@/components/dashboard/HFTWidget';
 import L3SettingsWidget from '@/components/dashboard/L3SettingsWidget';
 
 const hardcodedData = {
@@ -87,7 +87,7 @@ export default function Dashboard() {
       case 'fund':
         return (
           <CollapsibleWidget id="fund" compactHeight={220}>
-            <PolymarketFundWidget />
+            <HFTWidget />
           </CollapsibleWidget>
         );
       case 'cars':
