@@ -10,7 +10,6 @@ const AccountPanel = dynamic(() => import('@/components/trading-lab/AccountPanel
 const OrdersPanel = dynamic(() => import('@/components/trading-lab/OrdersPanel'), { ssr: false });
 const TradePanel = dynamic(() => import('@/components/trading-lab/TradePanel'), { ssr: false });
 const BotPanel = dynamic(() => import('@/components/trading-lab/BotPanel'), { ssr: false });
-const L3SettingsWidget = dynamic(() => import('@/components/dashboard/L3SettingsWidget'), { ssr: false });
 
 const SYMBOLS = [
   { label: 'BTC/USDT', value: 'BTC_USDT' },
@@ -203,10 +202,7 @@ export default function TradingPage() {
             <BotPanel symbol={symbol} />
           </div>
 
-          {/* L3 Settings Panel */}
-          <div className="flex-none">
-            <L3SettingsWidget />
-          </div>
+
 
           {/* Account Panel */}
           <div className="flex-none h-[200px]">

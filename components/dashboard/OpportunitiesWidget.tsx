@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useCallback } from 'react';
-import { Zap, TrendingUp, Clock, DollarSign, RefreshCw, ExternalLink, Sparkles } from 'lucide-react';
+import { Zap, TrendingUp, Clock, DollarSign, RefreshCw, ExternalLink, Sparkles, Globe, MessageCircle } from 'lucide-react';
 
 type Opportunity = {
     id: string;
@@ -16,6 +16,9 @@ type Opportunity = {
     actionLabel?: string;
     tags: string[];
     hot?: boolean;
+    source?: 'reddit' | 'twitter' | 'producthunt' | 'hackernews' | 'web';
+    sourceUrl?: string;
+    sourceSnippet?: string;
 };
 
 type Props = {
@@ -23,7 +26,7 @@ type Props = {
     borderColor?: string;
 };
 
-const categoryConfig = {
+const categoryConfig: Record<string, { label: string; color: string; bg: string; border: string }> = {
     'ai-saas': { label: 'AI / SaaS', color: 'text-purple-400', bg: 'bg-purple-500/10', border: 'border-purple-500/20' },
     'import': { label: 'IMPORTACIÓN', color: 'text-blue-400', bg: 'bg-blue-500/10', border: 'border-blue-500/20' },
     'digital': { label: 'DIGITAL', color: 'text-cyan-400', bg: 'bg-cyan-500/10', border: 'border-cyan-500/20' },
@@ -31,13 +34,21 @@ const categoryConfig = {
     'content': { label: 'CONTENIDO', color: 'text-pink-400', bg: 'bg-pink-500/10', border: 'border-pink-500/20' },
 };
 
-const difficultyConfig = {
+const difficultyConfig: Record<string, { label: string; color: string; bg: string }> = {
     'easy': { label: 'FÁCIL', color: 'text-green-400', bg: 'bg-green-500/10' },
     'medium': { label: 'MEDIA', color: 'text-yellow-400', bg: 'bg-yellow-500/10' },
     'hard': { label: 'AVANZADA', color: 'text-red-400', bg: 'bg-red-500/10' },
 };
 
-const POLL_MS = 4 * 60 * 60 * 1000; // 4 hours — Gemini call is expensive
+const sourceConfig: Record<string, { icon: string; color: string; bg: string; label: string }> = {
+    'reddit': { icon: '🔴', color: 'text-orange-400', bg: 'bg-orange-500/10', label: 'Reddit' },
+    'twitter': { icon: '𝕏', color: 'text-blue-400', bg: 'bg-blue-500/10', label: 'X' },
+    'producthunt': { icon: '🚀', color: 'text-amber-400', bg: 'bg-amber-500/10', label: 'PH' },
+    'hackernews': { icon: '🟠', color: 'text-orange-300', bg: 'bg-orange-400/10', label: 'HN' },
+    'web': { icon: '🌐', color: 'text-cyan-400', bg: 'bg-cyan-500/10', label: 'Web' },
+};
+
+const POLL_MS = 30 * 60 * 1000; // 30 minutes
 
 const OpportunitiesWidget: React.FC<Props> = ({
     color = 'bg-[#1C1C1E]/60',
@@ -61,7 +72,7 @@ const OpportunitiesWidget: React.FC<Props> = ({
             }
             setOpportunities(data.opportunities);
             setLastUpdated(new Date());
-            setExpandedId(null); // collapse all on refresh
+            setExpandedId(null);
         } catch (err: any) {
             setError(err.message || 'Error al cargar oportunidades');
         } finally {
@@ -88,6 +99,9 @@ const OpportunitiesWidget: React.FC<Props> = ({
                 <h3 className="text-xs font-semibold text-amber-400 tracking-wider flex items-center gap-1.5">
                     <Zap className="h-3.5 w-3.5" />
                     OPORTUNIDADES DE NEGOCIO
+                    <span className="ml-1 text-[8px] font-bold bg-[#00FF41]/10 text-[#00FF41] px-1.5 py-0.5 rounded-full animate-pulse">
+                        LIVE
+                    </span>
                 </h3>
                 <div className="flex items-center gap-2">
                     {hotCount > 0 && (
@@ -98,7 +112,7 @@ const OpportunitiesWidget: React.FC<Props> = ({
                     <button
                         onClick={fetchOpportunities}
                         disabled={loading}
-                        title="Regenerar con IA"
+                        title="Buscar nuevas oportunidades"
                         className="text-gray-500 hover:text-amber-400 transition-colors disabled:opacity-40"
                     >
                         <RefreshCw className={`h-3 w-3 ${loading ? 'animate-spin' : ''}`} />
@@ -110,7 +124,7 @@ const OpportunitiesWidget: React.FC<Props> = ({
             {loading && opportunities.length === 0 && (
                 <div className="flex-1 flex flex-col items-center justify-center gap-3">
                     <Sparkles className="h-6 w-6 text-amber-400/40 animate-pulse" />
-                    <p className="text-[10px] text-gray-500 font-mono italic">Analizando oportunidades con IA...</p>
+                    <p className="text-[10px] text-gray-500 font-mono italic">Escaneando Reddit, X, ProductHunt...</p>
                 </div>
             )}
 
@@ -155,6 +169,7 @@ const OpportunitiesWidget: React.FC<Props> = ({
                         {filtered.map((opp) => {
                             const cat = categoryConfig[opp.category] || categoryConfig['digital'];
                             const diff = difficultyConfig[opp.difficulty] || difficultyConfig['medium'];
+                            const src = opp.source ? sourceConfig[opp.source] || sourceConfig['web'] : null;
                             const isExpanded = expandedId === opp.id;
 
                             return (
@@ -170,6 +185,11 @@ const OpportunitiesWidget: React.FC<Props> = ({
                                                 <p className="text-[11px] font-bold text-white truncate">{opp.title}</p>
                                             </div>
                                             <div className="flex items-center gap-1.5 flex-wrap">
+                                                {src && (
+                                                    <span className={`text-[7px] font-bold ${src.color} ${src.bg} px-1.5 py-0.5 rounded`}>
+                                                        {src.icon} {src.label}
+                                                    </span>
+                                                )}
                                                 <span className={`text-[7px] font-bold ${cat.color} ${cat.bg} px-1.5 py-0.5 rounded ${cat.border} border`}>
                                                     {cat.label}
                                                 </span>
@@ -190,6 +210,16 @@ const OpportunitiesWidget: React.FC<Props> = ({
                                     {isExpanded && (
                                         <div className="px-3 pb-3 pt-0 space-y-2 border-t border-white/5 mt-0">
                                             <p className="text-[10px] text-gray-400 leading-relaxed pt-2">{opp.description}</p>
+
+                                            {/* Source snippet */}
+                                            {opp.sourceSnippet && (
+                                                <div className="bg-white/[0.03] rounded-lg p-2 border border-white/5">
+                                                    <p className="text-[9px] text-gray-500 italic leading-relaxed">
+                                                        💬 &ldquo;{opp.sourceSnippet}&rdquo;
+                                                    </p>
+                                                </div>
+                                            )}
+
                                             <div className="flex flex-wrap gap-1">
                                                 {opp.tags?.map(tag => (
                                                     <span key={tag} className="text-[7px] text-gray-500 bg-white/5 px-1.5 py-0.5 rounded">
@@ -197,16 +227,28 @@ const OpportunitiesWidget: React.FC<Props> = ({
                                                     </span>
                                                 ))}
                                             </div>
-                                            {opp.actionUrl && (
-                                                <a
-                                                    href={opp.actionUrl}
-                                                    target="_blank"
-                                                    rel="noopener noreferrer"
-                                                    className="inline-flex items-center gap-1 text-[9px] text-blue-400 hover:text-blue-300 font-bold transition-colors"
-                                                >
-                                                    <ExternalLink className="h-2.5 w-2.5" /> {opp.actionLabel}
-                                                </a>
-                                            )}
+                                            <div className="flex items-center gap-3">
+                                                {opp.sourceUrl && opp.sourceUrl.length > 0 && (
+                                                    <a
+                                                        href={opp.sourceUrl}
+                                                        target="_blank"
+                                                        rel="noopener noreferrer"
+                                                        className="inline-flex items-center gap-1 text-[9px] text-blue-400 hover:text-blue-300 font-bold transition-colors"
+                                                    >
+                                                        <Globe className="h-2.5 w-2.5" /> Ver fuente
+                                                    </a>
+                                                )}
+                                                {opp.actionUrl && (
+                                                    <a
+                                                        href={opp.actionUrl}
+                                                        target="_blank"
+                                                        rel="noopener noreferrer"
+                                                        className="inline-flex items-center gap-1 text-[9px] text-amber-400 hover:text-amber-300 font-bold transition-colors"
+                                                    >
+                                                        <ExternalLink className="h-2.5 w-2.5" /> {opp.actionLabel || 'Ejecutar'}
+                                                    </a>
+                                                )}
+                                            </div>
                                         </div>
                                     )}
                                 </div>
@@ -219,10 +261,10 @@ const OpportunitiesWidget: React.FC<Props> = ({
             {/* Footer */}
             <div className="mt-3 pt-2 border-t border-white/5 flex items-center justify-between shrink-0">
                 <span className="text-[8px] text-gray-600 font-mono flex items-center gap-1">
-                    <Sparkles className="h-2.5 w-2.5" /> Generado por Gemini AI
+                    <Sparkles className="h-2.5 w-2.5" /> Gemini AI · Reddit · X · Web
                 </span>
                 <span className="text-[8px] text-gray-700 font-mono">
-                    {loading ? 'generando...' : lastUpdated
+                    {loading ? 'escaneando...' : lastUpdated
                         ? `act. ${lastUpdated.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' })}`
                         : 'pendiente'}
                 </span>

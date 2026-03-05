@@ -30,7 +30,6 @@ import ApeChat from '@/components/dashboard/ApeChat';
 import NotificationSystem from '@/components/dashboard/NotificationSystem';
 import BalanceCards from '@/components/dashboard/BalanceCards';
 import HFTWidget from '@/components/dashboard/HFTWidget';
-import L3SettingsWidget from '@/components/dashboard/L3SettingsWidget';
 
 const hardcodedData = {
   assets: { value: 128430.22, change: 12.5 },
@@ -50,7 +49,6 @@ const DEFAULT_ITEMS = [
   { id: 'orders', colSpan: 'lg:col-span-12' },
   { id: 'console', colSpan: 'lg:col-span-7' },
   { id: 'market', colSpan: 'lg:col-span-5' },
-  { id: 'l3-settings', colSpan: 'lg:col-span-4' },
 ];
 
 export default function Dashboard() {
@@ -126,12 +124,7 @@ export default function Dashboard() {
             <OrdersWidget borderColor="border-[#00FF41]/20" />
           </CollapsibleWidget>
         );
-      case 'l3-settings':
-        return (
-          <CollapsibleWidget id="l3-settings" compactHeight={180}>
-            <L3SettingsWidget />
-          </CollapsibleWidget>
-        );
+
       default:
         return null;
     }
