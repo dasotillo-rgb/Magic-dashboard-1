@@ -25,7 +25,7 @@ function StatusDot({ alive, size = 8 }) {
 
 function Card({ title, icon, children, className = "", headerRight }) {
   return (
-    <div className={`bg-[#18181B] border border-[#27272A] rounded-xl p-5 ${className}`}>
+    <div className={`bg-[#18181B] border border-[#27272A] rounded-xl p-4 lg:p-5 overflow-hidden max-w-full ${className}`}>
       <div className="flex justify-between items-center mb-5">
         <div className="flex items-center gap-2.5">
           {typeof icon === 'string' ? <span className="text-lg">{icon}</span> : icon}
@@ -183,7 +183,7 @@ export default function HFTV2Dashboard() {
   const paperBalance = 1000 + paperPnl; // Assuming a base paper equity of $1000
 
   return (
-    <div className="flex flex-col min-h-[calc(100vh-2rem)] bg-[#09090B] font-sans text-gray-200">
+    <div className="flex flex-col min-h-[calc(100vh-2rem)] bg-[#09090B] font-sans text-gray-200 overflow-x-hidden max-w-[100vw]">
 
       {/* ===== HEADER ===== */}
       <header className="flex flex-wrap items-center justify-between flex-shrink-0 px-4 lg:px-6 py-3 lg:py-4 bg-[#18181B] border-b border-[#27272A] gap-2">
@@ -214,15 +214,15 @@ export default function HFTV2Dashboard() {
       </header>
 
       {/* ===== MAIN LAYOUT ===== */}
-      <div className="flex-1 overflow-y-auto p-4 lg:p-6 max-w-[1400px] mx-auto w-full flex flex-col gap-6 pb-24 lg:pb-6">
+      <div className="flex-1 overflow-y-auto overflow-x-hidden p-4 lg:p-6 max-w-[1400px] mx-auto w-full flex flex-col gap-5 lg:gap-6 pb-24 lg:pb-6">
 
         {/* --- BALANCES & PNL --- */}
-        <div className="flex items-center gap-3 overflow-x-auto no-scrollbar pb-1">
+        <div className="flex flex-wrap items-center gap-2 pb-1">
           <BalanceCards />
 
           {/* Custom PnL Card matching BalanceCards style */}
-          <div className={`flex items-center gap-2.5 bg-[#1C1C1E]/80 border ${(metrics?.total_pnl ?? 0) < 0 ? 'border-red-500/20' : 'border-[#00FF41]/20'} rounded-2xl px-4 py-2.5 backdrop-blur-sm`}>
-            <div className={`w-7 h-7 rounded-full ${(metrics?.total_pnl ?? 0) < 0 ? 'bg-red-500/15 border-red-500/30' : 'bg-[#00FF41]/15 border-[#00FF41]/30'} flex items-center justify-center shrink-0`}>
+          <div className={`flex items-center gap-2 bg-[#1C1C1E]/80 border ${(metrics?.total_pnl ?? 0) < 0 ? 'border-red-500/20' : 'border-[#00FF41]/20'} rounded-2xl px-3 py-2 backdrop-blur-sm`}>
+            <div className={`w-6 h-6 rounded-full ${(metrics?.total_pnl ?? 0) < 0 ? 'bg-red-500/15 border-red-500/30' : 'bg-[#00FF41]/15 border-[#00FF41]/30'} flex items-center justify-center shrink-0`}>
               <ActivitySquare className={`h-3.5 w-3.5 ${(metrics?.total_pnl ?? 0) < 0 ? 'text-red-400' : 'text-[#00FF41]'}`} />
             </div>
             <div>
@@ -234,8 +234,8 @@ export default function HFTV2Dashboard() {
           </div>
 
           {/* Paper P&L Card */}
-          <div className={`flex items-center gap-2.5 bg-[#1C1C1E]/80 border ${paperPnl < 0 ? 'border-red-500/20' : 'border-[#00FF41]/20'} rounded-2xl px-4 py-2.5 backdrop-blur-sm`}>
-            <div className={`w-7 h-7 rounded-full ${paperPnl < 0 ? 'bg-red-500/15 border-red-500/30' : 'bg-[#00FF41]/15 border-[#00FF41]/30'} flex items-center justify-center shrink-0`}>
+          <div className={`flex items-center gap-2 bg-[#1C1C1E]/80 border ${paperPnl < 0 ? 'border-red-500/20' : 'border-[#00FF41]/20'} rounded-2xl px-3 py-2 backdrop-blur-sm`}>
+            <div className={`w-6 h-6 rounded-full ${paperPnl < 0 ? 'bg-red-500/15 border-red-500/30' : 'bg-[#00FF41]/15 border-[#00FF41]/30'} flex items-center justify-center shrink-0`}>
               <ActivitySquare className={`h-3.5 w-3.5 ${paperPnl < 0 ? 'text-red-400' : 'text-[#00FF41]'}`} />
             </div>
             <div>
@@ -247,8 +247,8 @@ export default function HFTV2Dashboard() {
           </div>
 
           {/* Paper Saldo Card */}
-          <div className={`flex items-center gap-2.5 bg-[#1C1C1E]/80 border ${paperBalance < 1000 ? 'border-red-500/20' : 'border-[#00FF41]/20'} rounded-2xl px-4 py-2.5 backdrop-blur-sm`}>
-            <div className={`w-7 h-7 rounded-full ${paperBalance < 1000 ? 'bg-red-500/15 border-red-500/30' : 'bg-[#00FF41]/15 border-[#00FF41]/30'} flex items-center justify-center shrink-0`}>
+          <div className={`flex items-center gap-2 bg-[#1C1C1E]/80 border ${paperBalance < 1000 ? 'border-red-500/20' : 'border-[#00FF41]/20'} rounded-2xl px-3 py-2 backdrop-blur-sm`}>
+            <div className={`w-6 h-6 rounded-full ${paperBalance < 1000 ? 'bg-red-500/15 border-red-500/30' : 'bg-[#00FF41]/15 border-[#00FF41]/30'} flex items-center justify-center shrink-0`}>
               <ActivitySquare className={`h-3.5 w-3.5 ${paperBalance < 1000 ? 'text-red-400' : 'text-[#00FF41]'}`} />
             </div>
             <div>
@@ -287,7 +287,7 @@ export default function HFTV2Dashboard() {
         >
           {market?.status === "LIVE" ? (
             <div className="flex flex-col gap-5">
-              <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-5 gap-3 lg:gap-4">
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
                 <BigNum label="BTC Price" value={fmtUsd(market.current_price)} small />
                 <BigNum label="Strike" value={fmtUsd(market.strike_price)} small />
                 <BigNum label="Delta" value={`${market.delta > 0 ? "+" : ""}${fmt(market.delta)}`} colorClass={deltaText} small />
@@ -299,18 +299,18 @@ export default function HFTV2Dashboard() {
 
               {/* Fair Value Display */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2">
-                <div className="bg-[#00FF41]/5 border border-[#00FF41]/20 rounded-xl p-4 flex flex-col items-center justify-center">
+                <div className="bg-[#00FF41]/5 border border-[#00FF41]/20 rounded-xl p-3 lg:p-4 flex flex-col items-center justify-center overflow-hidden">
                   <div className="text-xs font-bold text-[#00FF41] mb-2 tracking-widest">FAIR VALUE UP</div>
-                  <div className="text-3xl font-black text-[#00FF41] font-mono">{pct(market.fair_value_up)}</div>
+                  <div className="text-xl sm:text-3xl font-black text-[#00FF41] font-mono">{pct(market.fair_value_up)}</div>
                   {market.order_book?.up && (
                     <div className="text-[9px] text-gray-500 mt-2 font-mono break-all leading-relaxed">
                       Ask: {fmt(market.order_book.up.best_ask, 3)} | Spread: {fmt(market.order_book.up.spread, 4)} | Depth: {fmt(market.order_book.up.ask_depth_5, 0)}
                     </div>
                   )}
                 </div>
-                <div className="bg-red-500/5 border border-red-500/20 rounded-xl p-4 flex flex-col items-center justify-center">
+                <div className="bg-red-500/5 border border-red-500/20 rounded-xl p-3 lg:p-4 flex flex-col items-center justify-center overflow-hidden">
                   <div className="text-xs font-bold text-red-500 mb-2 tracking-widest">FAIR VALUE DOWN</div>
-                  <div className="text-3xl font-black text-red-500 font-mono">{pct(market.fair_value_down)}</div>
+                  <div className="text-xl sm:text-3xl font-black text-red-500 font-mono">{pct(market.fair_value_down)}</div>
                   {market.order_book?.down && (
                     <div className="text-[9px] text-gray-500 mt-2 font-mono break-all leading-relaxed">
                       Ask: {fmt(market.order_book.down.best_ask, 3)} | Spread: {fmt(market.order_book.down.spread, 4)} | Depth: {fmt(market.order_book.down.ask_depth_5, 0)}
@@ -423,7 +423,7 @@ export default function HFTV2Dashboard() {
         {/* --- METRICS --- */}
         {metrics && metrics.total_trades > 0 && (
           <Card title="Performance" icon={<LayoutList className="h-5 w-5 text-indigo-400" />}>
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-7 gap-4">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-3">
               <BigNum label="Trades" value={metrics.total_trades} small />
               <BigNum label="Win Rate" value={`${fmt(metrics.win_rate, 1)}%`} colorClass={metrics.win_rate >= 50 ? 'text-[#00FF41]' : 'text-red-500'} small />
               <BigNum label="Total PnL" value={fmtUsd(metrics.total_pnl)} colorClass={metrics.total_pnl >= 0 ? 'text-[#00FF41]' : 'text-red-500'} small />

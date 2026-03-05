@@ -159,7 +159,7 @@ export default function WeatherDashboard() {
   ];
 
   return (
-    <div className="flex flex-col min-h-screen bg-[#09090B] font-sans text-gray-200 p-4 lg:p-6 max-w-[1600px] mx-auto space-y-4 lg:space-y-6 relative pb-24 lg:pb-6">
+    <div className="flex flex-col min-h-screen bg-[#09090B] font-sans text-gray-200 p-4 lg:p-6 max-w-[100vw] mx-auto space-y-4 lg:space-y-6 relative pb-24 lg:pb-6 overflow-x-hidden">
 
       {/* --- HEADER --- */}
       <div className="flex flex-wrap items-start justify-between gap-3">
@@ -189,17 +189,17 @@ export default function WeatherDashboard() {
       </div>
 
       {/* --- BALANCES & PNL --- */}
-      <div className="flex items-center gap-3 overflow-x-auto no-scrollbar pb-1 mb-4 lg:mb-8">
+      <div className="flex flex-wrap items-center gap-2 pb-1 mb-4 lg:mb-8">
         <BalanceCards />
 
         {/* Custom Weather P&L Card */}
-        <div className={`flex items-center gap-2.5 bg-[#1C1C1E]/80 border \${pnl < 0 ? 'border-red-500/20' : 'border-[#00FF41]/20'} rounded-2xl px-4 py-2.5 backdrop-blur-sm`}>
-          <div className={`w-7 h-7 rounded-full \${pnl < 0 ? 'bg-red-500/15 border-red-500/30' : 'bg-[#00FF41]/15 border-[#00FF41]/30'} flex items-center justify-center shrink-0`}>
-            <ActivitySquare className={`h-3.5 w-3.5 \${pnl < 0 ? 'text-red-400' : 'text-[#00FF41]'}`} />
+        <div className={`flex items-center gap-2 bg-[#1C1C1E]/80 border ${pnl < 0 ? 'border-red-500/20' : 'border-[#00FF41]/20'} rounded-2xl px-3 py-2 backdrop-blur-sm`}>
+          <div className={`w-6 h-6 rounded-full ${pnl < 0 ? 'bg-red-500/15 border-red-500/30' : 'bg-[#00FF41]/15 border-[#00FF41]/30'} flex items-center justify-center shrink-0`}>
+            <ActivitySquare className={`h-3.5 w-3.5 ${pnl < 0 ? 'text-red-400' : 'text-[#00FF41]'}`} />
           </div>
           <div>
             <p className="text-[9px] text-gray-500 uppercase tracking-widest font-bold">Weather P&L</p>
-            <p className={`text-sm font-black font-mono leading-tight \${pnl < 0 ? 'text-red-400' : 'text-[#00FF41]'}`}>
+            <p className={`text-sm font-black font-mono leading-tight ${pnl < 0 ? 'text-red-400' : 'text-[#00FF41]'}`}>
               {fmtUsd(pnl)}
             </p>
           </div>
@@ -249,10 +249,10 @@ export default function WeatherDashboard() {
           <button
             key={t.id}
             onClick={() => setActiveTab(t.id)}
-            className={`px-5 py-3 text-xs font-bold uppercase tracking-widest transition-all duration-200 border-b-2 \${activeTab === t.id
+            className={`px-4 py-3 text-xs font-bold uppercase tracking-widest transition-all duration-200 border-b-2 whitespace-nowrap ${activeTab === t.id
               ? 'border-blue-500 text-blue-400 bg-blue-500/5'
               : 'border-transparent text-gray-500 hover:text-gray-300 hover:border-gray-700'
-            }`}
+              }`}
           >
             {t.label}
           </button>
@@ -265,7 +265,7 @@ export default function WeatherDashboard() {
           <div className="xl:col-span-2 flex flex-col gap-6">
 
             {/* Live Trades Panel */}
-            <div className="bg-[#18181B] border border-[#27272A]/80 rounded-2xl shadow-[0_4px_24px_rgba(0,0,0,0.2)] flex flex-col overflow-hidden ring-1 ring-white/5">
+            <div className="bg-[#18181B] border border-[#27272A]/80 rounded-2xl shadow-[0_4px_24px_rgba(0,0,0,0.2)] flex flex-col overflow-hidden ring-1 ring-white/5 max-w-full">
               <div className="px-5 py-4 border-b border-[#27272A] bg-[#1C1C1E]/80 backdrop-blur-sm flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <div className="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse" />
@@ -301,7 +301,7 @@ export default function WeatherDashboard() {
                           <td className="px-3 py-2.5 text-[#00FF41]">{fmtUsd(t.payout)}</td>
                           <td className="px-3 py-2.5 text-amber-500">{pct(t.edge)}</td>
                           <td className="px-3 py-2.5">
-                            <span className={`px-2 py-0.5 rounded text-[10px] \${t.status === 'LIVE' ? 'bg-blue-500/10 text-blue-400' : 'bg-gray-800 text-gray-400'}`}>
+                            <span className={`px-2 py-0.5 rounded text-[10px] ${t.status === 'LIVE' ? 'bg-blue-500/10 text-blue-400' : 'bg-gray-800 text-gray-400'}`}>
                               {t.status}
                             </span>
                           </td>
@@ -314,7 +314,7 @@ export default function WeatherDashboard() {
             </div>
 
             {/* Active Opportunities Panel */}
-            <div className="bg-[#18181B] border border-[#27272A]/80 rounded-2xl shadow-[0_4px_24px_rgba(0,0,0,0.2)] flex flex-col overflow-hidden ring-1 ring-white/5">
+            <div className="bg-[#18181B] border border-[#27272A]/80 rounded-2xl shadow-[0_4px_24px_rgba(0,0,0,0.2)] flex flex-col overflow-hidden ring-1 ring-white/5 max-w-full">
               <div className="px-5 py-4 border-b border-[#27272A] bg-[#1C1C1E]/80 backdrop-blur-sm flex items-center gap-2">
                 <AlertTriangle className="w-4 h-4 text-amber-500" />
                 <h3 className="text-sm font-bold text-gray-200 uppercase tracking-widest">Active Scanned Opportunities</h3>
@@ -408,13 +408,13 @@ export default function WeatherDashboard() {
               <div className="px-5 py-4 border-b border-[#27272A] bg-[#1C1C1E]/80 backdrop-blur-sm">
                 <div className="flex justify-between items-start mb-2">
                   <h3 className="text-base font-bold text-gray-100">{s.name}</h3>
-                  <span className={`text-[10px] uppercase tracking-widest font-black px-2 py-1 rounded bg-[#09090B] border border-[\${s.riskColor}]/30`} style={{ color: s.riskColor }}>
+                  <span className={`text-[10px] uppercase tracking-widest font-black px-2 py-1 rounded bg-[#09090B] border`} style={{ color: s.riskColor, borderColor: `${s.riskColor}30` }}>
                     {s.status}
                   </span>
                 </div>
                 <p className="text-xs text-gray-400 leading-relaxed">{s.description}</p>
               </div>
-              <div className="grid grid-cols-4 border-b border-[#27272A] bg-[#09090B]">
+              <div className="grid grid-cols-2 sm:grid-cols-4 border-b border-[#27272A] bg-[#09090B] overflow-hidden">
                 <div className="p-3 border-r border-[#27272A] text-center">
                   <p className="text-[9px] text-gray-600 uppercase tracking-widest">WR</p>
                   <p className="text-xs font-bold text-gray-200 mt-1">{s.winRate}</p>

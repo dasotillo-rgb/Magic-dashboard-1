@@ -61,13 +61,13 @@ export default function BalanceCards() {
                 initial={{ opacity: 0, y: -8 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4 }}
-                className="flex items-center gap-2.5 bg-[#1C1C1E]/80 border border-blue-500/20 rounded-2xl px-4 py-2.5 backdrop-blur-sm"
+                className="flex items-center gap-2 bg-[#1C1C1E]/80 border border-blue-500/20 rounded-2xl px-3 py-2 backdrop-blur-sm"
             >
-                <div className="w-7 h-7 rounded-full bg-blue-500/15 border border-blue-500/30 flex items-center justify-center shrink-0">
+                <div className="w-6 h-6 rounded-full bg-blue-500/15 border border-blue-500/30 flex items-center justify-center shrink-0">
                     <DollarSign className="h-3.5 w-3.5 text-blue-400" />
                 </div>
                 <div>
-                    <p className="text-[9px] text-gray-500 uppercase tracking-widest font-bold">Saldo USDC</p>
+                    <p className="text-[9px] text-gray-500 uppercase tracking-widest font-bold">Saldo USDC.E</p>
                     {loading && !data ? (
                         <div className="h-4 w-16 bg-white/5 rounded animate-pulse mt-0.5" />
                     ) : (
@@ -85,9 +85,9 @@ export default function BalanceCards() {
                 initial={{ opacity: 0, y: -8 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: 0.06 }}
-                className="flex items-center gap-2.5 bg-[#1C1C1E]/80 border border-purple-500/20 rounded-2xl px-4 py-2.5 backdrop-blur-sm"
+                className="flex items-center gap-2 bg-[#1C1C1E]/80 border border-purple-500/20 rounded-2xl px-3 py-2 backdrop-blur-sm"
             >
-                <div className="w-7 h-7 rounded-full bg-purple-500/15 border border-purple-500/30 flex items-center justify-center shrink-0">
+                <div className="w-6 h-6 rounded-full bg-purple-500/15 border border-purple-500/30 flex items-center justify-center shrink-0">
                     <Fuel className="h-3.5 w-3.5 text-orange-400" />
                 </div>
                 <div>
