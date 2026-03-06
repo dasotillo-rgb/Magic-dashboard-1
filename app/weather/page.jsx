@@ -170,6 +170,9 @@ export default function WeatherDashboard() {
 
   const pnl = summary.payout - summary.cost;
 
+  // Calculate realized P&L only from visible trades to avoid mismatch with historical backend summary
+  const realizedPnl = -(recentTrades.reduce((acc, trade) => acc + (trade.cost || 0), 0));
+
   // TABS definition
   const tabs = [
     { id: "live", label: "🔴 LIVE MONITOR" },
@@ -232,7 +235,7 @@ export default function WeatherDashboard() {
           <div>
             <p className="text-[9px] text-gray-500 uppercase tracking-widest font-bold">Realized P&L</p>
             <p className="text-sm font-black font-mono leading-tight text-red-400">
-              {fmtUsd(-summary.cost)}
+              {fmtUsd(realizedPnl)}
             </p>
           </div>
         </div>
