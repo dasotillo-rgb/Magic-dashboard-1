@@ -77,6 +77,10 @@ export default function HFTV2Dashboard() {
   const [settingsSaved, setSettingsSaved] = useState(false);
   const [tab, setTab] = useState("live");
   const [lastUpdate, setLastUpdate] = useState(null);
+  const [realPnl, setRealPnl] = useState(null);
+  const [usdcBalance, setUsdcBalance] = useState(null);
+
+  const HFT_BASELINE = 92.22;
   const intervalRef = useRef(null);
   const busy = useRef(false);
 
@@ -93,11 +97,11 @@ export default function HFTV2Dashboard() {
 
       const headers = { "Content-Type": "application/json" };
 
-      const response = await fetch(targetUrl, {
-        headers,
-        signal: AbortSignal.timeout(6000)
-      }).catch(err => {
-        console.error(`[HFT V2] Error de red al contactar ${targetUrl}:`, err);
+      const [response, statusRes] = await Promise.all([
+        fetch(targetUrl, { headers, signal: AbortSignal.timeout(6000) }),
+        fetch('/api/status', { signal: AbortSignal.timeout(6000) }).catch(() => null)
+      ]).catch(err => {
+        console.error(`[HFT V2] Error de red:`, err);
         throw err;
       });
 
@@ -110,6 +114,14 @@ export default function HFTV2Dashboard() {
 
       const d = await response.json();
       console.log(`[HFT V2] Datos recibidos correctamente:`, d);
+
+      if (statusRes && statusRes.ok) {
+        const bd = await statusRes.json();
+        if (bd.usdc != null) {
+          setUsdcBalance(bd.usdc);
+          setRealPnl(bd.usdc - HFT_BASELINE);
+        }
+      }
 
       if (d) {
         setMarket(d.market || null);
@@ -221,14 +233,14 @@ export default function HFTV2Dashboard() {
           <BalanceCards />
 
           {/* Custom PnL Card matching BalanceCards style */}
-          <div className={`flex items-center gap-2 bg-[#1C1C1E]/80 border ${(metrics?.total_pnl ?? 0) < 0 ? 'border-red-500/20' : 'border-[#00FF41]/20'} rounded-2xl px-3 py-2 backdrop-blur-sm`}>
-            <div className={`w-6 h-6 rounded-full ${(metrics?.total_pnl ?? 0) < 0 ? 'bg-red-500/15 border-red-500/30' : 'bg-[#00FF41]/15 border-[#00FF41]/30'} flex items-center justify-center shrink-0`}>
-              <ActivitySquare className={`h-3.5 w-3.5 ${(metrics?.total_pnl ?? 0) < 0 ? 'text-red-400' : 'text-[#00FF41]'}`} />
+          <div className={`flex items-center gap-2 bg-[#1C1C1E]/80 border ${(realPnl ?? 0) < 0 ? 'border-red-500/20' : 'border-[#00FF41]/20'} rounded-2xl px-3 py-2 backdrop-blur-sm`}>
+            <div className={`w-6 h-6 rounded-full ${(realPnl ?? 0) < 0 ? 'bg-red-500/15 border-red-500/30' : 'bg-[#00FF41]/15 border-[#00FF41]/30'} flex items-center justify-center shrink-0`}>
+              <ActivitySquare className={`h-3.5 w-3.5 ${(realPnl ?? 0) < 0 ? 'text-red-400' : 'text-[#00FF41]'}`} />
             </div>
             <div>
-              <p className="text-[9px] text-gray-500 uppercase tracking-widest font-bold">Total P&L</p>
-              <p className={`text-sm font-black font-mono leading-tight ${(metrics?.total_pnl ?? 0) < 0 ? 'text-red-400' : 'text-[#00FF41]'}`}>
-                {metrics ? fmtUsd(metrics.total_pnl) : "—"}
+              <p className="text-[9px] text-gray-500 uppercase tracking-widest font-bold">Real P&L</p>
+              <p className={`text-sm font-black font-mono leading-tight ${(realPnl ?? 0) < 0 ? 'text-red-400' : 'text-[#00FF41]'}`}>
+                {realPnl != null ? fmtUsd(realPnl) : "—"}
               </p>
             </div>
           </div>
@@ -426,7 +438,7 @@ export default function HFTV2Dashboard() {
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-3">
               <BigNum label="Trades" value={metrics.total_trades} small />
               <BigNum label="Win Rate" value={`${fmt(metrics.win_rate, 1)}%`} colorClass={metrics.win_rate >= 50 ? 'text-[#00FF41]' : 'text-red-500'} small />
-              <BigNum label="Total PnL" value={fmtUsd(metrics.total_pnl)} colorClass={metrics.total_pnl >= 0 ? 'text-[#00FF41]' : 'text-red-500'} small />
+              <BigNum label="Real PnL" value={realPnl != null ? fmtUsd(realPnl) : "—"} colorClass={(realPnl ?? 0) >= 0 ? 'text-[#00FF41]' : 'text-red-500'} small />
               <BigNum label="Avg PnL" value={fmtUsd(metrics.avg_pnl)} colorClass={metrics.avg_pnl >= 0 ? 'text-[#00FF41]' : 'text-red-500'} small />
               <BigNum label="Best" value={fmtUsd(metrics.best_trade)} colorClass="text-[#00FF41]" small />
               <BigNum label="Worst" value={fmtUsd(metrics.worst_trade)} colorClass="text-red-500" small />
