@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback, useRef } from "react";
-import { CloudLightning, Zap, Settings, ActivitySquare, LayoutList, CheckCircle2, History, AlertTriangle } from "lucide-react";
+import { CloudLightning, Zap, Settings, ActivitySquare, LayoutList, CheckCircle2, History, AlertTriangle, RotateCcw } from "lucide-react";
 import BalanceCards from "@/components/dashboard/BalanceCards";
 
 // --- STATIC INFO FROM CLAUDE ---
@@ -79,6 +79,16 @@ export default function WeatherDashboard() {
       } catch { }
     }
     return { max_usd: 2.0, entry: 0.15, cities: "New York, London" };
+  });
+
+  const [baseline, setBaseline] = useState(() => {
+    if (typeof window !== 'undefined') {
+      try {
+        const saved = localStorage.getItem('weather_baseline');
+        if (saved) return JSON.parse(saved);
+      } catch { }
+    }
+    return { cost: 0, payout: 0 };
   });
 
   const busy = useRef(false);
@@ -168,10 +178,18 @@ export default function WeatherDashboard() {
     }
   };
 
-  const pnl = summary.payout - summary.cost;
+  const visibleCost = summary.cost - baseline.cost;
+  const visiblePayout = summary.payout - baseline.payout;
+  const pnl = visiblePayout - visibleCost;
+  const realizedPnl = -visibleCost;
 
-  // Calculate realized P&L only from visible trades to avoid mismatch with historical backend summary
-  const realizedPnl = -(recentTrades.reduce((acc, trade) => acc + (trade.cost || 0), 0));
+  const handleResetStats = () => {
+    const newBaseline = { cost: summary.cost, payout: summary.payout };
+    setBaseline(newBaseline);
+    if (typeof window !== 'undefined') {
+      try { localStorage.setItem('weather_baseline', JSON.stringify(newBaseline)); } catch { }
+    }
+  };
 
   // TABS definition
   const tabs = [
@@ -239,6 +257,16 @@ export default function WeatherDashboard() {
             </p>
           </div>
         </div>
+
+        {/* Reset Stats Button */}
+        <button
+          onClick={handleResetStats}
+          className="flex items-center gap-2 bg-[#1C1C1E]/80 border border-[#27272A] hover:border-gray-500/50 hover:bg-[#27272A] rounded-2xl px-3 py-2 text-[10px] text-gray-400 uppercase tracking-widest font-bold transition-all ml-1"
+          title="Resetear contadores a cero"
+        >
+          <RotateCcw className="h-4 w-4" />
+          <span className="hidden sm:inline">Reset 0</span>
+        </button>
       </div>
 
       {/* --- CONNECTION INPUT --- */}
