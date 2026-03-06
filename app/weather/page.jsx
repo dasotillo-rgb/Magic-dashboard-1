@@ -78,7 +78,7 @@ export default function WeatherDashboard() {
 
   // Formatting helpers
   const fmtUsd = (val) => val == null ? "—" : new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 2 }).format(val);
-  const pct = (val) => val == null ? "—" : `\${(val * 100).toFixed(1)}%`;
+  const pct = (val) => val == null ? "—" : `${(val * 100).toFixed(1)}%`;
 
   // Fetch logic
   const fetchAll = useCallback(async (isManual = false) => {
@@ -370,7 +370,7 @@ export default function WeatherDashboard() {
                   <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest block mb-1">Max Entry Price</label>
                   <div className="flex items-center gap-3">
                     <input
-                      type="range" min="0.05" max="0.5" step="0.01"
+                      type="range" min="0.05" max="1.0" step="0.01"
                       value={botConfig.entry}
                       onChange={(e) => setBotConfig(s => ({ ...s, entry: parseFloat(e.target.value) }))}
                       className="flex-1 accent-blue-500"
