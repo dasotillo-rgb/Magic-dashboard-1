@@ -211,15 +211,28 @@ export default function WeatherDashboard() {
       <div className="flex flex-wrap items-center gap-2 pb-1 mb-4 lg:mb-8">
         <BalanceCards />
 
-        {/* Custom Weather P&L Card */}
+        {/* Custom Weather P&L Card (now Potential Profit) */}
         <div className={`flex items-center gap-2 bg-[#1C1C1E]/80 border ${pnl < 0 ? 'border-red-500/20' : 'border-[#00FF41]/20'} rounded-2xl px-3 py-2 backdrop-blur-sm`}>
           <div className={`w-6 h-6 rounded-full ${pnl < 0 ? 'bg-red-500/15 border-red-500/30' : 'bg-[#00FF41]/15 border-[#00FF41]/30'} flex items-center justify-center shrink-0`}>
             <ActivitySquare className={`h-3.5 w-3.5 ${pnl < 0 ? 'text-red-400' : 'text-[#00FF41]'}`} />
           </div>
           <div>
-            <p className="text-[9px] text-gray-500 uppercase tracking-widest font-bold">Weather P&L</p>
+            <p className="text-[9px] text-gray-500 uppercase tracking-widest font-bold">Potential Profit</p>
             <p className={`text-sm font-black font-mono leading-tight ${pnl < 0 ? 'text-red-400' : 'text-[#00FF41]'}`}>
               {fmtUsd(pnl)}
+            </p>
+          </div>
+        </div>
+
+        {/* Realized P&L Card */}
+        <div className="flex items-center gap-2 bg-[#1C1C1E]/80 border border-red-500/20 rounded-2xl px-3 py-2 backdrop-blur-sm">
+          <div className="w-6 h-6 rounded-full bg-red-500/15 border-red-500/30 flex items-center justify-center shrink-0">
+            <ActivitySquare className="h-3.5 w-3.5 text-red-400" />
+          </div>
+          <div>
+            <p className="text-[9px] text-gray-500 uppercase tracking-widest font-bold">Realized P&L</p>
+            <p className="text-sm font-black font-mono leading-tight text-red-400">
+              {fmtUsd(-summary.cost)}
             </p>
           </div>
         </div>
