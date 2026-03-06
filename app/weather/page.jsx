@@ -107,6 +107,15 @@ export default function WeatherDashboard() {
       setConnected(true);
       setErrorMsg(null);
       setLastUpdate(new Date());
+
+      // Hydrate Control Panel from backend config so settings persist across reloads
+      if (d.config) {
+        setBotConfig(prev => ({
+          max_usd: d.config.max_usd ?? d.config.max_bet_usd ?? prev.max_usd,
+          entry: d.config.entry ?? d.config.max_entry_price ?? prev.entry,
+          cities: d.config.cities ?? d.config.target_cities ?? prev.cities,
+        }));
+      }
     } catch (err) {
       console.error("[Weather] Fallo al obtener datos:", err);
       setConnected(false);
