@@ -178,10 +178,27 @@ export default function WeatherDashboard() {
     }
   };
 
-  const visibleCost = summary.cost - baseline.cost;
-  const visiblePayout = summary.payout - baseline.payout;
-  const pnl = visiblePayout - visibleCost;
-  const realizedPnl = -visibleCost;
+  const netPnl = recentTrades.reduce((acc, trade) => {
+    // Sumar PNL cerrado (payout - cost)
+    if (trade.status === 'WON' || trade.status === 'LOST') {
+      return acc + ((trade.payout || 0) - (trade.cost || 0));
+    }
+    // Restar el cost de los abiertos
+    if (trade.status === 'paper_trade' || trade.status === 'live_trade' || trade.status === 'LIVE' || trade.status === 'OPEN') {
+      return acc - (trade.cost || 0);
+    }
+    return acc;
+  }, 0);
+
+  const potentialPayout = recentTrades.reduce((acc, trade) => {
+    // Sumar payout potencial de los abiertos
+    if (trade.status === 'paper_trade' || trade.status === 'live_trade' || trade.status === 'LIVE' || trade.status === 'OPEN') {
+      return acc + (trade.payout || 0);
+    }
+    return acc;
+  }, 0);
+
+  const realizedPnl = -(recentTrades.reduce((acc, trade) => acc + (trade.cost || 0), 0));
 
   const handleResetStats = () => {
     const newBaseline = { cost: summary.cost, payout: summary.payout };
@@ -232,15 +249,18 @@ export default function WeatherDashboard() {
       <div className="flex flex-wrap items-center gap-2 pb-1 mb-4 lg:mb-8">
         <BalanceCards />
 
-        {/* Custom Weather P&L Card (now Potential Profit) */}
-        <div className={`flex items-center gap-2 bg-[#1C1C1E]/80 border ${pnl < 0 ? 'border-red-500/20' : 'border-[#00FF41]/20'} rounded-2xl px-3 py-2 backdrop-blur-sm`}>
-          <div className={`w-6 h-6 rounded-full ${pnl < 0 ? 'bg-red-500/15 border-red-500/30' : 'bg-[#00FF41]/15 border-[#00FF41]/30'} flex items-center justify-center shrink-0`}>
-            <ActivitySquare className={`h-3.5 w-3.5 ${pnl < 0 ? 'text-red-400' : 'text-[#00FF41]'}`} />
+        {/* Custom NET P&L Card */}
+        <div className={`flex items-center gap-2 bg-[#1C1C1E]/80 border ${netPnl < 0 ? 'border-red-500/20' : 'border-[#00FF41]/20'} rounded-2xl px-3 py-2 backdrop-blur-sm`}>
+          <div className={`w-6 h-6 rounded-full ${netPnl < 0 ? 'bg-red-500/15 border-red-500/30' : 'bg-[#00FF41]/15 border-[#00FF41]/30'} flex items-center justify-center shrink-0`}>
+            <ActivitySquare className={`h-3.5 w-3.5 ${netPnl < 0 ? 'text-red-400' : 'text-[#00FF41]'}`} />
           </div>
-          <div>
-            <p className="text-[9px] text-gray-500 uppercase tracking-widest font-bold">Potential Profit</p>
-            <p className={`text-sm font-black font-mono leading-tight ${pnl < 0 ? 'text-red-400' : 'text-[#00FF41]'}`}>
-              {fmtUsd(pnl)}
+          <div className="flex flex-col">
+            <p className="text-[9px] text-gray-500 uppercase tracking-widest font-bold">NET P&L</p>
+            <p className={`text-base font-black font-mono leading-none ${netPnl < 0 ? 'text-red-400' : 'text-[#00FF41]'}`}>
+              {fmtUsd(netPnl)}
+            </p>
+            <p className="text-[8.5px] text-gray-500 tracking-wider mt-0.5">
+              POTENTIAL PAYOUT: <span className="text-gray-300 font-bold">{fmtUsd(potentialPayout)}</span>
             </p>
           </div>
         </div>
