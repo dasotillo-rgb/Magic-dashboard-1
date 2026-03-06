@@ -71,7 +71,15 @@ export default function WeatherDashboard() {
   const [summary, setSummary] = useState({ trades: 0, cost: 0, payout: 0, edge: 0 });
   const [recentTrades, setRecentTrades] = useState([]);
   const [opportunities, setOpportunities] = useState([]);
-  const [botConfig, setBotConfig] = useState({ max_usd: 2.0, entry: 0.15, cities: "New York, London" });
+  const [botConfig, setBotConfig] = useState(() => {
+    if (typeof window !== 'undefined') {
+      try {
+        const saved = localStorage.getItem('weather_bot_config');
+        if (saved) return JSON.parse(saved);
+      } catch { }
+    }
+    return { max_usd: 2.0, entry: 0.15, cities: "New York, London" };
+  });
 
   const busy = useRef(false);
   const [isFetching, setIsFetching] = useState(false);
@@ -152,6 +160,8 @@ export default function WeatherDashboard() {
         throw new Error(`Error HTTP: ${response.status}`);
       }
       alert("Settings saved successfully to the bot runtime!");
+      // Persist to localStorage so settings survive page reloads
+      try { localStorage.setItem('weather_bot_config', JSON.stringify(botConfig)); } catch { }
     } catch (err) {
       console.error("[Weather] Error al guardar config:", err);
       alert(`Error saving settings: ${err.message}. Verifica log de consola y API.`);
